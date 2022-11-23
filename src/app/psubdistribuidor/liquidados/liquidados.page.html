@@ -1,0 +1,30 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Liquidados</ion-title>
+
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>  
+</ion-header>
+<ion-content>
+  <ion-item color="none" lines="none" class="ion-no-border"> 
+    <p>Presione <ion-icon name="ellipsis-horizontal-outline"></ion-icon> para ver los detalles del pedido. <br>
+    Presione <ion-icon name="cash-outline"></ion-icon> para ver los pagos del pedido.</p>
+  </ion-item>
+  <ion-card *ngFor="let liquidados of pedidosSubLiquidados">
+    <ion-item  lines="none">
+      <ion-icon color="black" class="icono" button="" slot="end" name="ellipsis-horizontal-outline" [routerLink]="['/detalle-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+      <h6>Pedido #{{liquidados.idPedido}} - {{liquidados.nombre_estatus}}</h6>
+    </ion-item>
+      <ion-item>
+        <ion-icon color="black" class="icono" button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+      <p>{{liquidados.nombre}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{liquidados.fecha}}</p>
+    </ion-item>
+  </ion-card>
+</ion-content>

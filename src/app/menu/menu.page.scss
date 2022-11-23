@@ -1,0 +1,91 @@
+ion-content{ 
+    --ion-background-color: rgb(242,242,242);
+    --ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(179,187,195,1) 100%);
+  }
+   ion-toolbar{
+  --ion-background-color: rgb(242,242,242);
+    --ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(179,187,195,1) 100%);
+ }
+
+
+
+  .ops{
+    margin-top: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .icon{
+    height: 120%;
+  }
+
+.ion-menu-button
+{
+    color: black;
+}
+
+ion-title{
+  color: black;
+}
+
+
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+code {
+  white-space: pre-wrap;
+}
+
+.error{
+  margin-top: 25%;
+  img{
+      height: 200px;
+  }   
+}
+
+
+//   .encabezado {
+//     --background: #FC0091
+//   ;
+//   }
+  
+//   .pie {
+//     --background: #FFFFFF
+//   ;
+//   }
+  
+//   .texto {
+//     --textcolor: #585050
+//   ;
+//   }
+//   .etiqueta {
+//     --width: 100%;
+//     --height: auto;
+//     --position: absolute;
+//     --bottom: 0 !important;
+//     --left: 0;
+//     --color: #FC0091
+//   ;
+//   }
+  
+//   ion-action-sheet ion-icon {
+//     width: 3rem;
+//     height: 3rem;
+//   }
+  
+//   ion-action-sheet .bomberos {
+//     content: url("../../assets/img/emergencias/icono/bomberos.svg");
+//   }
+  
+//   ion-action-sheet .ion-md-cruz,
+//   ion-action-sheet .ion-ios-cruz {
+//     content: url("../../assets/img/emergencias/icono/bomberos.svg");
+//   }
+  /*# sourceMappingURL=menu.page.css.map */
+  

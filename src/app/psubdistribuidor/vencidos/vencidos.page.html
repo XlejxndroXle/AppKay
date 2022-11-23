@@ -1,0 +1,40 @@
+
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Vencidos</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+   
+  </ion-toolbar>  
+</ion-header>
+
+<ion-content>
+  <ion-item color="none" lines="none" class="ion-no-border"> 
+    <p>Presione <ion-icon name="ellipsis-horizontal-outline"></ion-icon> para ver los detalles del pedido. <br>
+    Presione <ion-icon name="cash-outline"></ion-icon> para ver los pagos del pedido.</p>
+  </ion-item>
+
+
+  <ion-card *ngFor="let pedido of pedidosSubVencidos">
+    <!-- CAMBIOS -->
+    <ion-item  lines="none" >
+      <ion-icon class="icono" color="dark" button="" slot="end" name="ellipsis-horizontal-outline" [routerLink]="['/detalle-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+      <h6>Pedido #{{pedido.idPedido}} - {{pedido.nombre_estatus}}</h6>
+    </ion-item>
+      <ion-item>
+        <ion-icon class="icono" color="dark"  button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+        <p>{{pedido.nombre}}</p>
+    </ion-item>
+    <ion-item>
+      <p>{{pedido.fecha}}</p>
+    </ion-item>
+  </ion-card>
+
+
+<!-- opciones -->
+
+
+</ion-content>

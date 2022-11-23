@@ -1,0 +1,55 @@
+ion-content{
+  //--ion-background-color: rgb(242,242,242);
+  //--ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(219,223,227,1) 100%);
+  //--ion-background-color: rgb(242,242,242);
+  //--ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(156,162,168,1) 100%);
+  
+  --ion-background-color: rgb(242,242,242);
+  --ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(179,187,195,1) 100%);
+}
+
+@-webkit-keyframes scale-in-center{0%{-webkit-transform:scale(0);transform:scale(0);opacity:1}100%{-webkit-transform:scale(1);transform:scale(1);opacity:1}}@keyframes scale-in-center{0%{-webkit-transform:scale(0);transform:scale(0);opacity:1}100%{-webkit-transform:scale(1);transform:scale(1);opacity:1}}
+
+.logo{
+  -webkit-animation:scale-in-center .4s cubic-bezier(.25,.46,.45,.94) both;animation:scale-in-center .4s cubic-bezier(.25,.46,.45,.94) both;
+
+  margin-top: 25%;
+  img{
+      height: 150px;
+  }   
+}
+
+.form{
+  ion-item{
+      border-radius: 10px;
+      margin-top: 5px;
+      margin-left: 40px;
+      margin-right: 40px;
+  }
+}
+.button{
+  ion-button{
+      margin-top: 7%;
+      margin-bottom: 10%;
+      height: 40px;
+      font-size: 15px;
+  }
+}
+
+
+.ion-color-mycolor {
+	--ion-color-base: var(--ion-color-mycolor);
+	--ion-color-base-rgb: var(--ion-color-mycolor-rgb);
+	--ion-color-contrast: var(--ion-color-mycolor-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-mycolor-contrast-rgb);
+	--ion-color-shade: var(--ion-color-mycolor-shade);
+	--ion-color-tint: var(--ion-color-mycolor-tint);
+}
+
+a{
+  color: black;
+}
+
+ion-item {
+  color: black;
+}

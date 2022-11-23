@@ -1,0 +1,85 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Detalle de Paquetes</ion-title>
+
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="paquetes"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+   
+  </ion-toolbar>  
+</ion-header>
+<ion-content>
+  <ion-item  color="none" lines="none" > 
+    <h5><b>Descripción del paquete</b></h5>
+  </ion-item> 
+  <!-- DESCRIPCION DEL PAQUETE -->
+  <div *ngIf="objetoDatosPaquete" >
+  <ion-card >
+    <ion-item lines="full">
+      <p slot="end">No. Paquete <br> <b>|   {{objetoDatosPaquete.idPaquete}}</b></p>
+      <p>Fecha de inicio<br> 
+        {{objetoDatosPaquete.fechaInicio| date:'dd/MM/yyyy'}}<br><br> 
+        Fecha Final <br>
+        {{objetoDatosPaquete.fechaFin| date:'dd/MM/yyyy'}}</p>
+    </ion-item>
+    <ion-item lines="none">
+      <p><b>Nombre del Paquete</b></p>
+      <p slot="end"><i>{{objetoDatosPaquete.nombrePaquete}}</i></p>
+    </ion-item>
+</ion-card>
+</div>
+
+
+<!-- <ion-item  color="none" lines="none" > 
+  <h5><b>Descripción del paquete</b></h5>
+</ion-item> 
+
+<ion-card >
+  <ion-item lines="none">
+    <p>Total sin descuento</p>
+    <p slot="end">$00.00</p>
+  </ion-item>
+  <ion-item lines="full">
+    <p>Descuento total</p>
+    <p slot="end">$00.00</p>
+  </ion-item>
+  <ion-item lines="none">
+    <p><b>Descuento total</b></p>
+    <p slot="end"><b>$30.00</b></p>
+  </ion-item>
+</ion-card> -->
+
+  <!--PRODUCTOS AGREAGOS AL PAQUETE-->
+  <ion-item  color="none" lines="none" > 
+    <h5><b>Productos agregados al paquete </b></h5>
+  </ion-item> 
+  <ion-card *ngFor="let infopaquete of objListaProductos">
+    <ion-item  lines="full">
+      <ion-grid>
+        <p><b><u>{{infopaquete.producto}}</u></b></p>
+        <ion-row class="ion-text-center ion-no-padding">
+          <ion-col>
+            <b>Unidad:</b> 
+            <br><b>{{infopaquete.cantidad}}</b>
+          </ion-col>
+          <ion-col>
+            Descuento
+            <br>${{infopaquete.descuento}} 
+          </ion-col>
+          <!-- <ion-col>
+            P.Unitario
+            <br>
+            <br>$30.00
+          </ion-col> -->
+          <ion-col>
+            Importe
+            <br>${{infopaquete.importe}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>      
+  </ion-card>
+
+</ion-content>

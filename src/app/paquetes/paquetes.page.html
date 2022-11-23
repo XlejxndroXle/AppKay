@@ -1,0 +1,41 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Paquetes</ion-title>
+
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+   
+  </ion-toolbar>  
+</ion-header>
+  
+<ion-content>
+  <ion-item color="none" lines="none" class="ion-no-border"> 
+    <p>Presione <ion-icon name="add-outline"></ion-icon> para conocer los detalles del paquete</p>
+  </ion-item>
+  <ion-item color="none" lines="none" > 
+    <h5><b>Detalles de paquetes</b></h5>
+  </ion-item>
+
+  <ion-card *ngFor="let infopaquete of detallePaquete">
+    <ion-item lines="full">
+      <p slot="end">No. Paquete <br> <b>| {{infopaquete.idPaquete}}</b></p>
+      <ion-icon button="" slot="end" class="icono" name="add-outline" [routerLink]="['/detalle-paquete/'+ infopaquete.idPaquete]"  routerLinkActive="router-link-active"></ion-icon>
+      <p>Fecha de inicio<br> 
+        {{infopaquete.fechaInicio|date: 'dd/MM/yyyy' }} <br><br> 
+        Fecha Final <br>
+        {{infopaquete.fechaFin|date: 'dd/MM/yyyy'}}</p>
+    </ion-item>
+    <ion-item lines="none">
+      <p><b>Nombre de Paquete</b></p>
+      <p slot="end">{{infopaquete.nombrePaquete}}</p>
+    </ion-item>
+    <ion-item lines="full">
+      <p><b>Importe</b></p>
+      <p slot="end">$30.00</p>
+    </ion-item>
+
+</ion-card>
+</ion-content>

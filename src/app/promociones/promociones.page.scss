@@ -1,0 +1,27 @@
+ion-content{
+    //--ion-background-color: rgb(242,242,242);
+    //--ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(219,223,227,1) 100%);
+    //--ion-background-color: rgb(242,242,242);
+    //--ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(156,162,168,1) 100%);
+    
+    --ion-background-color: rgb(242,242,242);
+    --ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(179,187,195,1) 100%);
+  }
+
+ion-card{
+  --ion-background-color: rgb(255,255,255);
+  --ion-background-color: radial-gradient(circle, rgba(255,255,255,1) 14%, rgba(232,231,231,1) 100%);
+  color: black;
+}
+  
+
+
+    // ANIMACION DEL ICONO
+
+    @-webkit-keyframes pulsate-fwd{0%{-webkit-transform:scale(1);transform:scale(1)}50%{-webkit-transform:scale(1.1);transform:scale(1.1)}100%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes pulsate-fwd{0%{-webkit-transform:scale(1);transform:scale(1)}50%{-webkit-transform:scale(1.1);transform:scale(1.1)}100%{-webkit-transform:scale(1);transform:scale(1)}}
+    .icono{
+      
+      -webkit-animation:pulsate-fwd .5s ease-in-out infinite both;animation:pulsate-fwd .5s ease-in-out infinite both;
+    }
+      
+      

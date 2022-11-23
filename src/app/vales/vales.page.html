@@ -1,0 +1,30 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Vales</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>  
+</ion-header> 
+<ion-content>
+  <ion-item color="none" lines="none" class="ion-no-border"> 
+    <p>Presione <ion-icon name="add-outline"></ion-icon> para conocer los detalles del vale</p>
+  </ion-item>
+  <ion-item color="none" lines="none" > 
+    <h5><b>Detalles del Vale</b></h5>
+  </ion-item>
+
+  <ion-card *ngFor="let vale of vales" >
+    <ion-item lines="full">
+      <p slot="end">No. Vale <br> <b>|  {{vale.idvale}}</b></p>
+      <ion-icon button="" slot="end" class="icono" name="add-outline" [routerLink]="['/detalle-vale/'+vale.idvale]"  routerLinkActive="router-link-active"></ion-icon>
+      <p>Fecha de inicio<br> 
+        {{vale.fechainicio  | date:'dd/MM/yyyy'}} <br><br> 
+        Fecha Final <br>
+        {{vale.fechafin  | date:'dd/MM/yyyy'}}</p>
+    </ion-item>
+</ion-card>
+
+</ion-content>

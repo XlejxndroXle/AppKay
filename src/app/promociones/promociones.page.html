@@ -1,0 +1,32 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Promociones</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+   
+  </ion-toolbar>  
+</ion-header>
+ 
+<ion-content>
+  <ion-item color="none" lines="none" class="ion-no-border"> 
+    <p>Presione <ion-icon name="add-outline"></ion-icon> para conocer los detalles de la promoción.</p>
+  </ion-item>
+  <ion-item color="none" lines="none" > 
+    <h5><b>Detalles de la promoción</b></h5>
+  </ion-item>
+  <ion-card *ngFor="let promociones of promos">
+    <ion-item  lines="none">
+      <ion-icon button="" slot="end" class="icono" name="add-outline" [routerLink]="['/detalle-promocion/'+promociones.idpromocion]"  routerLinkActive="router-link-active"></ion-icon>
+      <h6><b>Promoción #{{promociones.idpromocion}}</b></h6>
+    </ion-item>
+      <ion-item lines="none">
+      <p><i>{{promociones.nombrepromocion}}</i></p>
+    </ion-item>
+    <ion-item>
+      <p>{{promociones.fechainicio| date: 'dd/MM/yyyy'}} hasta el {{promociones.fechafin | date:'dd/MM/yyy'}}</p>
+    </ion-item>
+  </ion-card>
+</ion-content>

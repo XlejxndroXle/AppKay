@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="vales"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de vale</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+  <ion-content>
+    <ion-item color="none" lines="none" > 
+      <h5><b>Informacion del Vale</b></h5>
+    </ion-item>
+    <ion-card *ngIf="objetoDatosVale">
+      <ion-item lines="full">
+        <p slot="end">No. Vale<br>| <b>{{objetoDatosVale.idvale}}</b></p>
+        <p>Fecha de inicio<br> 
+          {{objetoDatosVale.fechainicio | date:'dd/MM/yyyy'}} <br><br> 
+          Fecha Final <br>
+          {{objetoDatosVale.fechafin | date:'dd/MM/yyyy'}}</p>
+      </ion-item>
+      <ion-item lines="full">
+        <br>
+       {{objetoDatosVale.descripcion}}       
+      </ion-item>
+      <br>
+      
+      <ion-item lines="none" color="none">
+        <p><i>Días para canjear el vale después de pagar 
+          el pedido que lo generó: </i><b>{{objetoDatosVale.diasparacanjearlo}}</b></p> 
+          
+      </ion-item>
+
+      <br>
+</ion-card>
+
+
+  </ion-content>
+  

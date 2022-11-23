@@ -1,0 +1,44 @@
+<ion-app>
+  <ion-header  class="ion-no-border"[translucent]="true">
+    <ion-toolbar color="none" >
+      <img  src="../../assets/img/pleca-01.png" />
+    </ion-toolbar>
+
+</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding ion-text-center">
+<div>
+  <div class="logo">
+    <img src="../assets/img/LOGO.png" alt="">
+  </div>  
+  <ion-title color="mycolor">INICIAR SESIÓN</ion-title>
+  
+  <div class="form">
+  <form [formGroup]="formLogin" (ngSubmit)="(formLogin.valid)?onFormSubmit(formLogin.value):null">
+    <ion-item color="none">
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-label position="floating">Correo Electronico</ion-label>
+      <ion-input  formControlName="email" placeholder="Ingrese su Correo" ngModel required></ion-input>
+    </ion-item>
+    <ion-item color="none">
+      <ion-icon slot="start" name="key-outline"></ion-icon>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input formControlName="contra" type="password" placeholder="Ingrese su Contraseña" ngModel required></ion-input>
+    </ion-item>
+    
+    <div class="button">
+      <ion-button color="mycolor" class="boton" size="default"  type="submit"  shape="round">Ingresar</ion-button>
+
+    </div>
+  </form>  
+  <label [routerLink]="['/forget-password']" routerLinkActive="router-link-active"><u>¿Olvidaste tú contraseña?</u></label>
+  </div>
+</div>
+</ion-content>
+<div>
+  <!-- <ion-footer class="ion-no-border">
+  <ion-toolbar color="none">
+    <img  src="../../assets/img/pleca-02.png" />
+  </ion-toolbar>
+</ion-footer> -->
+</div>
+</ion-app>

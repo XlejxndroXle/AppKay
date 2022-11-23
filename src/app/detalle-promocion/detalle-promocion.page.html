@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="promociones"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Promocion</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+  
+  <ion-content>
+    <ion-item color="none" lines="none" > 
+      <h5><b>Detalles de la Promoción</b></h5>
+    </ion-item>
+    <div *ngIf="objetoDatosPromocion">
+    <ion-card >
+      <ion-item lines="full">
+        <p slot="end">No. Promocion<br>|# {{objetoDatosPromocion.idpromocion}}</p>
+        <p>Fecha de inicio<br> 
+          {{objetoDatosPromocion.fechainicio| date:'dd/MM/YYYY'}} <br><br> 
+          Fecha Final <br>
+          {{objetoDatosPromocion.fechafin | date:'dd/MM/YYYY'}}</p>
+      </ion-item>
+      
+      <ion-item lines="full">
+        <h4>{{objetoDatosPromocion.nombrepromocion}}</h4>        
+      </ion-item>
+      <br>
+      <ion-item lines="none">
+         {{objetoDatosPromocion.descripcion}}
+      </ion-item>
+</ion-card>
+</div>
+
+  <!-- PRODUCTOS DE COMPRA OBLIGATORIOS 
+
+    <ion-item color="none" lines="none" > 
+      <h5><b>Productos de compra Obligatorios</b></h5>
+    </ion-item>
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label>Pokémon Yellow</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Mega Man X</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>The Legend of Zelda</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Pac-Man</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Super Mario World</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+ 
+
+  <ion-item color="none" lines="none" > 
+    <h5><b>Productos de regalo Obligatorios</b></h5>
+  </ion-item>
+<ion-card>
+  <ion-list>
+    <ion-item>
+      <ion-label>Pokémon Yellow</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Mega Man X</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>The Legend of Zelda</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Pac-Man</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Super Mario World</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-card>
+
+-->
+
+  </ion-content>
+  

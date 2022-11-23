@@ -1,0 +1,8 @@
+{
+  "name": "kayrot",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

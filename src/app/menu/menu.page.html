@@ -1,0 +1,172 @@
+<ion-app>
+     <!-- MENU DESPLEGABLE -->
+     <ion-menu contentId="main-content" >
+      <ion-header>
+        <ion-toolbar>
+          <ion-item lines="none" class="ion-text-center">
+            <ion-title>KAYROT</ion-title>
+          </ion-item>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item color="none" lines="none" [routerLink]="['/user-profile']"  routerLinkActive="router-link-active">
+          <ion-icon slot="start" name="person-outline"></ion-icon>
+          <ion-label>
+            <h2>Perfil</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item color="none" lines="none" (click)="logout()">
+          <ion-icon slot="start" name="power-outline"></ion-icon>
+          <ion-label>
+            Cerrar Sesión
+          </ion-label>
+        </ion-item>
+      </ion-content>
+    
+    </ion-menu>
+    <div class="ion-page" id="main-content" >
+      <ion-header>
+        <ion-toolbar color="none">
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+
+      <!-- FIN DE MENU DESPLEGABLE -->
+ 
+      <!-- MENU DEL USUARIO -->
+      <ion-content [fullscreen]="true" class="ion-padding ion-text-center">
+        <!-- <h1>{{tipoUsuario}}</h1> -->
+    <div *ngIf="this.tipoUsuario==='4'">
+    <!-- PRIMER BOTON -->
+      <div class="ops">
+          <ion-row  justify-content-center >
+              <ion-col color="none" lines="none">
+              <ion-item class="" color="none" lines="none">
+                      <!-- <img  (click)="descargaPagos()" (click)="presentAlert()" src="../../assets/iconos/pagos.png"/> -->
+                      <img   (click)="presentAlert()" src="../../assets/iconos/pagos.png"/>
+               </ion-item>
+              </ion-col>
+      <!-- SEGUNDO BOTON -->
+
+              <ion-col color="none">
+                <ion-item color="none" lines="none">
+                      <img  (click)="presentActionSheet()" src="../../assets/iconos/historialpedidos.png"/>
+                </ion-item>
+              </ion-col>
+          </ion-row>
+      </div>
+       <!-- TERCER BOTON -->
+      <div class="ops">
+        <ion-row  justify-content-center>
+            <ion-col>
+              <ion-item color="none" lines="none">
+                    <img [routerLink]="['/promociones']" src="../../assets/iconos/promociones.png"  routerLinkActive="router-link-active" />
+               </ion-item>
+            </ion-col>
+        <!-- CUARTO BOTON -->
+            <ion-col >
+              <ion-item color="none" lines="none">
+                    <img  [routerLink]="['/vales']"  src="../../assets/iconos/vales.png"  routerLinkActive="router-link-active" />
+              </ion-item>
+            </ion-col>
+          <!-- QUINTO BOTON     -->
+        </ion-row>
+    </div>
+      <div class="ops">
+        <ion-row  justify-content-center>
+          <!-- SEXTO BOTON -->
+            <ion-col >
+              <ion-item color="none" lines="none">
+                    <img  [routerLink]="['/paquetes']" src="../../assets/iconos/paquetes.png"  routerLinkActive="router-link-active" />
+              </ion-item>
+            </ion-col>
+            <!-- SEPTIMO BOTON -->
+            <ion-col >
+              <ion-item color="none" lines="none">
+                    <img [routerLink]="['/notificaciones']" src="../../assets/iconos/notificación.png"  routerLinkActive="router-link-active" />
+              </ion-item>
+            </ion-col>
+        </ion-row>
+    </div>
+  </div>
+
+ 
+<!-- MENU DE SUBDISTRIBUIDOR -->
+
+  <div *ngIf="this.tipoUsuario==='2' || this.tipoUsuario==='3'">
+         <!-- PRIMER BOTON -->
+         <div class="ops">
+          <ion-row  justify-content-center >
+              <ion-col color="none" lines="none">
+              <ion-item class="" color="none" lines="none">
+                      <img [routerLink]="['/levantarpedido']" src="../../assets/iconos/levantarpedido.png"  routerLinkActive="router-link-active" />
+               </ion-item>
+              </ion-col>
+      <!-- SEGUNDO BOTON -->
+      <ion-col color="none" lines="none">
+        <ion-item class="" color="none" lines="none">
+                <img [routerLink]="['/pago']" src="../../assets/iconos/pago.png"  routerLinkActive="router-link-active" />
+         </ion-item>
+        </ion-col>
+          </ion-row>
+      </div>
+       <!-- TERCER BOTON -->
+      <div class="ops">
+        <ion-row  justify-content-center>
+            <ion-col>
+              <ion-item color="none" lines="none">
+                    <img [routerLink]="['/his']" src="../../assets/iconos/historialcobro.png"  routerLinkActive="router-link-active" />
+               </ion-item>
+            </ion-col>
+        <!-- CUARTO BOTON -->
+            <ion-col >
+              <ion-item color="none" lines="none">
+                    <img  [routerLink]="['/vales']"  src="../../assets/iconos/historialpedidos.png"  routerLinkActive="router-link-active" />
+              </ion-item>
+            </ion-col>
+        </ion-row>
+      </div>
+       <!-- QUINTO BOTON -->
+       <div class="ops">
+        <ion-row  justify-content-center>
+            <ion-col>
+              <ion-item color="none" lines="none">
+                    <img [routerLink]="['/his']" src="../../assets/iconos/promociones.png"  routerLinkActive="router-link-active" />
+               </ion-item>
+            </ion-col>
+        <!-- SEXTO BOTON -->
+            <ion-col >
+              <ion-item color="none" lines="none">
+                    <img  [routerLink]="['/vales']"  src="../../assets/iconos/vales.png"  routerLinkActive="router-link-active" />
+              </ion-item>
+            </ion-col>
+        </ion-row>
+      </div>
+             <!-- QUINTO BOTON -->
+             <div class="ops">
+              <ion-row  justify-content-center>
+                  <ion-col>
+                    <ion-item color="none" lines="none">
+                          <img [routerLink]="['/his']" src="../../assets/iconos/notificación.png"  routerLinkActive="router-link-active" />
+                     </ion-item>
+                  </ion-col>
+              </ion-row>
+            </div>
+      
+      </div>
+        <!-- USUARIO NO ENCONTRADO -->
+      <div *ngIf="this.tipoUsuario==='1' || this.tipoUsuario>='5'">
+       
+        <div class="error">
+          <img src="../assets/img/error.png" alt="">
+        </div>
+        <h1>Lo sentimos, pero el usuario que ingresaste no existe en sistema, favor de comunicarse con el
+          administrador</h1>
+      </div>
+    </ion-content>
+  </div>
+</ion-app>

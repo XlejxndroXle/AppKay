@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle de Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<!-- CANTIDAD A PAGAR -->
+
+<ion-content >
+  <ion-item color="none" lines="none" > 
+    <h5><b>Cantidad a pagar</b></h5>
+  </ion-item>
+  <ion-card>
+    <ion-item  lines="full">
+      <h6>2022-Marzo-02</h6> 
+      <h6 slot="end">|#163</h6>
+    </ion-item>
+    
+    <ion-item lines="none">
+      <p>Productos (4) <br><br> 
+        Total sin descuento: <br> 
+        (Paquete-producto) </p>
+        <p slot="end">$570.00</p>
+    </ion-item>
+    <ion-item lines="full">
+      <p>Descuento total <br>
+      Producto</p>
+      <p slot="end">$44.50</p>
+    </ion-item>
+    <ion-item lines="none">
+      <p><b>Total Final</b></p><br>
+      <p slot="end">$525.50</p>
+    </ion-item>
+
+  </ion-card>
+
+<!-- DETALLES DEL PEDIDO -->
+
+  <ion-item color="none" lines="none" > 
+    <h5><b>Información del Pedido</b></h5>
+  </ion-item>
+  <div>
+    <ion-card>
+      <ion-item  lines="full">
+        <ion-grid>
+          <p><b><u>01 RED FUSION SOMBRAS</u></b></p>
+          <ion-row class="ion-text-center ion-no-padding">
+            <ion-col>
+              <br><b>Unidad:</b> 
+              <br><b>1</b>
+            </ion-col>
+            <ion-col>
+              Descuento
+              <br>
+              <br>$3.00 
+            </ion-col>
+            <ion-col>
+              P.Unitario
+              <br>
+              <br>$30.00
+            </ion-col>
+            <ion-col>
+              Importe
+              <br>
+              <br>$27.00
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>      
+    </ion-card>
+  
+  </div>    
+
+</ion-content>
