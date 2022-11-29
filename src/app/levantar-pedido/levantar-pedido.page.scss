@@ -1,0 +1,60 @@
+ion-content{
+    //--ion-background-color: rgb(242,242,242);
+    //--ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(219,223,227,1) 100%);
+    //--ion-background-color: rgb(242,242,242);
+    //--ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(156,162,168,1) 100%);
+    
+    --ion-background-color: rgb(242,242,242);
+    --ion-background-color: radial-gradient(circle, rgba(242,242,242,1) 0%, rgba(179,187,195,1) 100%);
+  }
+
+ion-card{
+  --ion-background-color: rgb(255,255,255);
+  --ion-background-color: radial-gradient(circle, rgba(255,255,255,1) 14%, rgba(232,231,231,1) 100%);
+  color: black;
+}
+
+.ion-color-mycolor {
+	--ion-color-base: var(--ion-color-mycolor);
+	--ion-color-base-rgb: var(--ion-color-mycolor-rgb);
+	--ion-color-contrast: var(--ion-color-mycolor-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-mycolor-contrast-rgb);
+	--ion-color-shade: var(--ion-color-mycolor-shade);
+	--ion-color-tint: var(--ion-color-mycolor-tint);
+}
+  
+    // ANIMACION DEL ICONO
+
+    @-webkit-keyframes heartbeat{from{-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:center center;transform-origin:center center;-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}10%{-webkit-transform:scale(.91);transform:scale(.91);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}17%{-webkit-transform:scale(.98);transform:scale(.98);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}33%{-webkit-transform:scale(.87);transform:scale(.87);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}45%{-webkit-transform:scale(1);transform:scale(1);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}@keyframes heartbeat{from{-webkit-transform:scale(1);transform:scale(1);-webkit-transform-origin:center center;transform-origin:center center;-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}10%{-webkit-transform:scale(.91);transform:scale(.91);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}17%{-webkit-transform:scale(.98);transform:scale(.98);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}33%{-webkit-transform:scale(.87);transform:scale(.87);-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}45%{-webkit-transform:scale(1);transform:scale(1);-webkit-animation-timing-function:ease-out;animation-timing-function:ease-out}}
+
+.iconocarrito{
+  -webkit-animation:heartbeat 1.5s ease-in-out infinite both;animation:heartbeat 1.5s ease-in-out infinite both;
+    }
+      
+
+
+.calendario{
+  display: grid;
+  place-items: center;
+}
+
+
+ion-modal {
+  --height: 75%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: rgba(209, 213, 219);
+  opacity: 1;
+}
+
+ion-modal ion-toolbar {
+  --background: rgb(60, 48, 24);
+  --color: white;
+}
+
+.bottonOkay{
+  margin-top: 30px;
+}

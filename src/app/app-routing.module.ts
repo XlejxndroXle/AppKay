@@ -75,6 +75,10 @@ const routes: Routes = [
     path: 'forget-password',
     loadChildren: () => import('./forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
   },
+  {
+    path: 'levantar-pedido',
+    loadChildren: () => import('./levantar-pedido/levantar-pedido.module').then( m => m.LevantarPedidoPageModule)
+  },
 ];
 
 @NgModule({

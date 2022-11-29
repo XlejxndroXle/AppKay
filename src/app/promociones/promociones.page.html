@@ -12,14 +12,14 @@
  
 <ion-content>
   <ion-item color="none" lines="none" class="ion-no-border"> 
-    <p>Presione <ion-icon name="add-outline"></ion-icon> para conocer los detalles de la promoción.</p>
+    <p>Presione <ion-icon name="eye-sharp"></ion-icon> para ver más detalles acerca de la promoción.</p>
   </ion-item>
   <ion-item color="none" lines="none" > 
     <h5><b>Detalles de la promoción</b></h5>
   </ion-item>
   <ion-card *ngFor="let promociones of promos">
     <ion-item  lines="none">
-      <ion-icon button="" slot="end" class="icono" name="add-outline" [routerLink]="['/detalle-promocion/'+promociones.idpromocion]"  routerLinkActive="router-link-active"></ion-icon>
+      <ion-icon button="" slot="end" class="icono" name="eye-sharp" [routerLink]="['/detalle-promocion/'+promociones.idpromocion]"  routerLinkActive="router-link-active"></ion-icon>
       <h6><b>Promoción #{{promociones.idpromocion}}</b></h6>
     </ion-item>
       <ion-item lines="none">

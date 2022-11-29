@@ -85,11 +85,11 @@
               </ion-item>
             </ion-col>
             <!-- SEPTIMO BOTON -->
-            <ion-col >
+            <!-- <ion-col >
               <ion-item color="none" lines="none">
                     <img [routerLink]="['/notificaciones']" src="../../assets/iconos/notificación.png"  routerLinkActive="router-link-active" />
               </ion-item>
-            </ion-col>
+            </ion-col> -->
         </ion-row>
     </div>
   </div>
@@ -103,7 +103,7 @@
           <ion-row  justify-content-center >
               <ion-col color="none" lines="none">
               <ion-item class="" color="none" lines="none">
-                      <img [routerLink]="['/levantarpedido']" src="../../assets/iconos/levantarpedido.png"  routerLinkActive="router-link-active" />
+                      <img [routerLink]="['/levantar-pedido']" src="../../assets/iconos/levantarpedido.png"  routerLinkActive="router-link-active" />
                </ion-item>
               </ion-col>
       <!-- SEGUNDO BOTON -->
@@ -123,11 +123,13 @@
                </ion-item>
             </ion-col>
         <!-- CUARTO BOTON -->
-            <ion-col >
-              <ion-item color="none" lines="none">
-                    <img  [routerLink]="['/vales']"  src="../../assets/iconos/historialpedidos.png"  routerLinkActive="router-link-active" />
-              </ion-item>
-            </ion-col>
+
+        <ion-col color="none">
+          <ion-item color="none" lines="none">
+                <img  (click)="presentActionSheet()" src="../../assets/iconos/historialpedidos.png"/>
+          </ion-item>
+        </ion-col>
+
         </ion-row>
       </div>
        <!-- QUINTO BOTON -->
@@ -135,9 +137,10 @@
         <ion-row  justify-content-center>
             <ion-col>
               <ion-item color="none" lines="none">
-                    <img [routerLink]="['/his']" src="../../assets/iconos/promociones.png"  routerLinkActive="router-link-active" />
+                    <img [routerLink]="['/promociones']" src="../../assets/iconos/promociones.png"  routerLinkActive="router-link-active" />
                </ion-item>
             </ion-col>
+            
         <!-- SEXTO BOTON -->
             <ion-col >
               <ion-item color="none" lines="none">
@@ -149,6 +152,11 @@
              <!-- QUINTO BOTON -->
              <div class="ops">
               <ion-row  justify-content-center>
+                <ion-col >
+                  <ion-item color="none" lines="none">
+                        <img  [routerLink]="['/paquetes']" src="../../assets/iconos/paquetes.png"  routerLinkActive="router-link-active" />
+                  </ion-item>
+                </ion-col>
                   <ion-col>
                     <ion-item color="none" lines="none">
                           <img [routerLink]="['/his']" src="../../assets/iconos/notificación.png"  routerLinkActive="router-link-active" />

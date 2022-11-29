@@ -1,0 +1,168 @@
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Alta de pedidos</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    <div class="iconocarrito">
+      <ion-button color="mycolor" id="open-modal">
+        <ion-badge color="none">7</ion-badge>
+        <ion-icon slot="icon-only" name="cart"></ion-icon>
+      </ion-button>
+    </div>
+    </ion-item>
+  </ion-toolbar>  
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-item color="none" lines="none" class="ion-no-border">
+      <ion-label position="stacked">Nombre de cliente</ion-label>
+      <ion-input placeholder="Escriba el nombre de cliente"></ion-input>
+    </ion-item>
+
+    <ion-list>
+      <ion-item color="none" lines="none" class="ion-no-border">
+        <ion-select (ionChange)="mostrarOcultar($event)" interface="popover" placeholder="Seleccione metodo de pago">
+          <ion-select-option value="credito">Crédito</ion-select-option>
+          <ion-select-option value="contado">Contado</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  
+  </ion-card>
+
+  <div class="calendario" *ngIf="mostrar">
+    <ion-card color="none" lines="none">
+      <ion-item color="none" lines="none" class="ion-text-center">
+        <ion-datetime presentation="date"></ion-datetime>
+      </ion-item>  
+    </ion-card>
+    
+  </div>
+  
+    <ion-card>
+      <ion-item color="none" lines="none" class="ion-no-border">
+        <ion-label position="stacked">Lineas</ion-label>
+        <ion-input placeholder="Escriba la linea que desee"></ion-input>
+      </ion-item> 
+      <ion-item color="none" lines="none" class="ion-no-border">
+        <ion-label position="stacked">Producto</ion-label>
+        <ion-input placeholder="Escriba el nombre de producto"></ion-input>
+      </ion-item>
+      <ion-item color="none" lines="none" class="ion-no-border">
+        <ion-label position="stacked">Cantidad</ion-label>
+        <ion-input placeholder="Digite la cantidad"></ion-input>
+      </ion-item>    
+      <ion-item color="none" lines="none" class="ion-no-border">
+        <ion-label  position="stacked">Precio Unitario</ion-label>
+        <ion-input [disabled]="true">$00.00</ion-input>
+      </ion-item>
+      <ion-item color="none" lines="none" class="ion-no-border">
+        <ion-label  position="stacked">Importe</ion-label>
+        <ion-input [disabled]="true">$00.00</ion-input>
+      </ion-item>
+      <div class="calendario">
+        <ion-button color="mycolor" size="default">Agregar producto</ion-button>
+      </div>
+    </ion-card>
+
+<div class="calendario">
+    <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Carrito de compras</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="modal.dismiss()">Volver</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+ <!-- LISTA DE PEDIDOS          -->
+          <ion-card>
+          <ion-list>
+            <ion-item color="none" class="ion-no-border">
+              <ion-label>
+                <h2>Maquillaje</h2>
+                <p>Unidades: 3</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+            <ion-item color="none" class="ion-no-border">
+              <ion-label>
+                <h2>Base de maquillaje</h2>
+                <p>Unidades: 5</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+            <ion-item color="none" class="ion-no-border">
+              <ion-label>
+                <h2>L'Oreal</h2>
+                <p>Unidades: 2</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+            <ion-item color="none" class="ion-no-border">
+              <ion-label>
+                <h2>Base de maquillaje</h2>
+                <p>Unidades: 5</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+            <ion-item color="none" class="ion-no-border">
+              <ion-label>
+                <h2>Maquillaje</h2>
+                <p>Unidades: 8</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+            <ion-item color="none" lines="none" class="ion-no-border">
+              <ion-label>
+                <h2>L'Oreal</h2>
+                <p>Unidades: 2</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+            <ion-item color="none" class="ion-no-border">
+              <ion-label>
+                <h2>L'Oreal</h2>
+                <p>Unidades: 2</p>
+                <p>Dto.: $0.00 P.U: $0.00 Imp.: $0.00</p>
+              </ion-label>
+              <ion-icon name="trash-bin"></ion-icon>
+            </ion-item>
+          </ion-list> 
+         </ion-card> 
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+  </div>
+  <!-- <ion-item color="none" lines="none" class="ion-no-border" > 
+    <h3>Cantidad a pagar</h3>
+  </ion-item> -->
+  <ion-card>
+    <h3 slot="start">Cantidad a pagar</h3>
+    <ion-item color="none" lines="none" class="ion-no-border">
+      <ion-label  position="stacked">Total sin descuento</ion-label>
+      <ion-input [disabled]="true">$00.00</ion-input>
+    </ion-item>
+    <ion-item color="none" lines="none" class="ion-no-border">
+      <ion-label  position="stacked">Descuento total</ion-label>
+      <ion-input [disabled]="true">$00.00</ion-input>
+    </ion-item>
+    <ion-item color="none" lines="none" class="ion-no-border">
+      <ion-label  position="stacked">Total</ion-label>
+      <ion-input [disabled]="true">$00.00</ion-input>
+    </ion-item>
+  </ion-card>
+  <div class="bottonOkay">
+    <ion-button color="mycolor" expand="block" (click)="alerta()">Confirmar</ion-button>
+  </div>
+</ion-content>
