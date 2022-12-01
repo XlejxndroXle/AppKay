@@ -8,6 +8,8 @@ import { AlertController } from '@ionic/angular';
 export class LevantarPedidoPage implements OnInit {
   
   mostrar: boolean = false;
+  mostrarCliente: boolean = false;
+  tipoPago;
   presentingElement = null;
   count = 0;
   constructor(private alertController: AlertController) { }
@@ -15,8 +17,6 @@ export class LevantarPedidoPage implements OnInit {
   ngOnInit() {
     this.presentingElement = document.querySelector('.ion-page');
   }
-
-
   mostrarOcultar($event){
     if(this.mostrar){
       this.mostrar = false;
@@ -24,9 +24,25 @@ export class LevantarPedidoPage implements OnInit {
       this.mostrar = true;
     }
   }
+  mostrarOcultarCliente($event){
+    if(this.mostrarCliente){
+      this.mostrarCliente = false;
+    } else{
+      this.mostrarCliente = true;
+    }
+  }
+  tipoPagos(pre) {
+    if (pre==1){
+       this.mostrar = false;
+           }
+         else{
+             this.mostrar = true;
+       }
+    }
+
   async alerta() {
     const alert = await this.alertController.create({
-      header: '¿Desea confirmar su pedido?',
+      header: '¿Desea guardar su pedido?',
       cssClass: 'custom-alert',
       buttons: [
         {
@@ -34,7 +50,7 @@ export class LevantarPedidoPage implements OnInit {
           cssClass: 'alert-button-cancel',
         },
         {
-          text: 'Confirmo',
+          text: 'Aceptar',
           cssClass: 'alert-button-confirm',
         },
       ],
@@ -42,6 +58,25 @@ export class LevantarPedidoPage implements OnInit {
 
     await alert.present();
   }
+
+  
+  async alertaDescuento() {
+    const alert = await this.alertController.create({
+      header: 'Descuento aplicado',
+      cssClass: 'custom-alert',
+      buttons: [
+        {
+          text: 'OK',
+          cssClass: 'alert-button-confirm',
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+  
+
 
 
 
