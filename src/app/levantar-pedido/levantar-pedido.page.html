@@ -18,23 +18,20 @@
 
   <form [formGroup]="formRegistroPedidos" > 
   <ion-card>
-    <div >   
-      <ion-item color="none" lines="none" class="ion-no-border">
-        <ion-label position="stacked">Nombre de cliente</ion-label>
-        <!-- <ion-select placeholder="Selecciona" formControlName="seccion" ngModel required>
-          <ion-select-option *ngFor="let listaSeccion of listaSeccion; " value="{{listaSeccion.getIdSeccion}} ">{{listaSeccion.getNombre}}</ion-select-option>
-      </ion-select> -->
-
-
-
-        <ion-select  formControlName="cliente" interface="popover" placeholder="Seleccione el cliente" (ionChange)="obtenerLineas(); validaClientePedidosVencidos(''); " >
+    <div *ngIf="bloqueaCliente == 0">   
+      <ion-item color="none" lines="none" class="ion-no-border" >
+        <ion-label position="stacked">Nombre de cliente</ion-label>       
+        <ion-select  formControlName="cliente" interface="popover" placeholder="Seleccione el cliente"  [disabled]="isDisableName" (ionChange)="obtenerLineas(); validaClientePedidosVencidos(); desabilitarNombre()">
         <ion-select-option *ngFor="let clien of clientes" value="{{clien.getIdCliente.toString()}}">
         {{ clien.getNombreCliente }}
         </ion-select-option>
         </ion-select>
+        <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
+
       </ion-item>
     </div>
 
+ <div *ngIf="bloqueaCliente == 0">   
     <ion-list>
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked">Tipo de pago</ion-label>
@@ -46,10 +43,11 @@
             Contado
           </ion-select-option>
         </ion-select>
+        <ion-note color="danger" *ngIf="formRegistroPedidos.controls['tipoPago'].hasError('required')">Este campo es obligatorio</ion-note>
       </ion-item>
     </ion-list>
-  </ion-card>
-
+  </div>  
+</ion-card>
 
   <div class="calendario" >
     <ion-card color="none" lines="none" *ngIf="tipo_pago_venta > 0" >
@@ -57,12 +55,12 @@
         <ion-datetime formControlName ="fechaLimite" presentation="date" [preferWheel]="false"></ion-datetime>
       </ion-item>  
     </ion-card>
-    
   </div>
+
     <ion-card>
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked">Lineas</ion-label>
-          <ion-select interface="popover" placeholder="Seleccione la linea" formControlName="linea" (ionChange)="obtenerProductos('')">
+          <ion-select interface="popover" placeholder="Seleccione la linea" formControlName="linea" [disabled]="isDisableLine" (ionChange)="obtenerProductos(''); desabilitarLinea()">
         <ion-select-option *ngFor="let lineas of lineas" [value]="lineas.idLinea">
           {{ lineas.nombreLinea }}
         </ion-select-option>
@@ -79,11 +77,11 @@
       </ion-item>
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked" >Cantidad</ion-label>
-        <ion-input placeholder="Digite la cantidad de productos" formControlName="cantidadProducto" (ionChange)="calcularTotal()"></ion-input>
+        <ion-input type="number"  placeholder="Digite la cantidad de productos" formControlName="cantidadProducto" (ionChange)="calcularTotal()"></ion-input>
       </ion-item>
       <ion-item color="none" lines="none" class="ion-no-border" *ngIf="this.clientePedidosVencidos==0">
         <ion-label position="stacked">Porcentaje descuento sin %</ion-label>
-        <ion-input placeholder="Digite el descuento" formControlName="descuento" (ionChange)="calcularTotal()"></ion-input>
+        <ion-input type="number"  placeholder="Digite el descuento" formControlName="descuento" (ionChange)="calcularTotal()"></ion-input>
       </ion-item>   
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label  position="stacked">Stock asesor comercial</ion-label>
@@ -107,7 +105,7 @@
     <ion-card *ngIf="this.clientePedidosVencidos==0">
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked">Porcentaje descuento general en pedido sin %</ion-label>
-        <ion-input placeholder="Digite el descuento" formControlName="descuentoGeneral"></ion-input>
+        <ion-input type="number" placeholder="Digite el descuento" formControlName="descuentoGeneral"></ion-input>
       </ion-item> 
       <div class="calendario">
         <ion-button color="mycolor" size="default" (click)="alertaDescuento(); aplicarDescuentoAdicionalAProductos()">Aplicar descuento</ion-button>
@@ -133,7 +131,7 @@
           <ion-list>
             <ion-item color="none" class="ion-no-border" lines="none">
               <ion-label>
-                <h2>{{product.nomProducto}}</h2>
+                <h2><b>{{product.nomProducto}}</b></h2>
                 <p>Cantidad: {{product.cantidadProducto}}</p>
                 <p>Dto.: ${{product.descuento}} P.U: ${{product.precioProducto}} Imp.: ${{product.totalProducto}}</p>
               </ion-label>

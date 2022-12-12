@@ -17,14 +17,13 @@ import jwtDecode from 'jwt-decode';
   templateUrl: './levantar-pedido.page.html',
   styleUrls: ['./levantar-pedido.page.scss'],
 })
-export class LevantarPedidoPage implements OnInit{
+
+export class LevantarPedidoPage implements OnInit{ 
   formRegistroPedidos: FormGroup;
   tipo_pago_venta = 0;
   mostrar: boolean = false;
   mostrarCliente: boolean = false;
   presentingElement = null;
-
-  
   subdistribuidores: any[] = [];
   //clientes: any[] = [];
   //productos: any[] = [];
@@ -39,7 +38,7 @@ export class LevantarPedidoPage implements OnInit{
   idProd=0;
   importeParcialVar=0;
   totalConIva=0;
-  //bloqueaCliente=0;
+  bloqueaCliente=0;
   opcionPaquete=2;
   tipoUsuarioLogueado;
   idUsuarioLogueado;
@@ -48,8 +47,10 @@ export class LevantarPedidoPage implements OnInit{
   totalsinDescuento=0;
   clientePedidosVencidos=1;
   registroUnaVez='SI';
-  bloquearCampoVendedor=0
-  botonCalcularTotal=0
+  bloquearCampoVendedor=0;
+  botonCalcularTotal=0;
+  isDisableName = false;
+  isDisableLine = false;
 
   clientesFiltrados: Observable<clientesDadosAlta[]>;
   clientes: clientesDadosAlta[]=[];
@@ -60,8 +61,8 @@ export class LevantarPedidoPage implements OnInit{
   NOMBREPRODUCTO:Observable<productosDadosAlta[]>;
 
 
-  constructor(formBuilder: FormBuilder,private alertController: AlertController,private httpClient: HttpClient,private notificaciones:NotificacionService,private router: Router) {
-
+  constructor(formBuilder: FormBuilder,private alertController: AlertController,private httpClient: HttpClient,private notificaciones:NotificacionService,private router: Router) 
+  {
     this.tipoUsuarioLogueado = jwtDecode(localStorage.getItem('jwt-admin'))['data']['tipoUsuario'];
     this.idUsuarioLogueado = jwtDecode(localStorage.getItem('jwt-admin'))['data']['idUsuario'];
     this.formRegistroPedidos = formBuilder.group({
@@ -98,7 +99,9 @@ export class LevantarPedidoPage implements OnInit{
       cantidadDescuento:[''],
       idClienteSeleccionado:[''],
       idProductoSeleccionado:[''],
-      descuentoGeneral:['']
+      descuentoGeneral:[''],
+      
+
     });
 
     this.obtenerSubdistribuidores();
@@ -111,6 +114,7 @@ export class LevantarPedidoPage implements OnInit{
   }
 
   ngOnInit(): void {
+    
     if(this.tipoUsuarioLogueado==3)
     {
       this.obtenerClientes('')
@@ -122,12 +126,11 @@ export class LevantarPedidoPage implements OnInit{
     //this.clien();
   }
 
-
-  async tipoPagos($event) {
+  tipoPagos($event) {
       // console.log( $event.target.value );
       if($event.target.value==1){
         this.tipo_pago_venta=1;
-        await this.calculaFechaLimite();
+          this.calculaFechaLimite();
         // console.log("Mostrar");
       }
       else{
@@ -136,7 +139,7 @@ export class LevantarPedidoPage implements OnInit{
       }
     } 
 
-    calculaFechaLimite()
+    async calculaFechaLimite()
     {
       this.httpClient.get(environment.api_url + 'CrudPedidos/calcularFechaLimite').subscribe(
         (data: any[]) => {
@@ -152,12 +155,14 @@ export class LevantarPedidoPage implements OnInit{
       );
     }
 
+    desabilitarNombre(){
+      this.isDisableName  = !this.isDisableName
+      }
 
-
-
-
-
-
+    desabilitarLinea(){
+        this.isDisableLine  = !this.isDisableLine
+        }
+/*
   mostrarOcultar($event) {
     if (this.mostrar) {
       this.mostrar = false;
@@ -172,8 +177,7 @@ export class LevantarPedidoPage implements OnInit{
       this.mostrarCliente = true;
     }
   }
-
-
+*/
 
   async alerta() {
     const alert = await this.alertController.create({
@@ -226,6 +230,21 @@ export class LevantarPedidoPage implements OnInit{
   }
   }
 
+  async erroInventario(mensaje) {
+    const alert = await this.alertController.create({
+      header: ''+mensaje,
+      cssClass: 'custom-alert',
+      buttons: [
+        {
+          text: 'Aceptar',
+          cssClass: 'alert-button-confirm',
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
   async alertaDescuento() {
     if(this.formRegistroPedidos.controls['descuentoGeneral'].value>0){
     const alert = await this.alertController.create({
@@ -253,15 +272,8 @@ export class LevantarPedidoPage implements OnInit{
     });
 
     await alert.present();
-
   }
-
-
-  }
-
-
-
-
+}
 
 
   private _filterProducto(value: string): productosDadosAlta[] {
@@ -380,8 +392,8 @@ export class LevantarPedidoPage implements OnInit{
   }
 
   async obtenerClientes(fitro:string){
-   // if(this.bloqueaCliente==0)
-    //{
+   if(this.bloqueaCliente==0)
+    {
      // this.NOMBRECLIENTE=of(<any>[]);
       //this.clientes=[];
       const formData = new FormData();
@@ -410,7 +422,10 @@ export class LevantarPedidoPage implements OnInit{
           this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
         }
       );
-    //}
+
+        
+
+    }
   }
 
 
@@ -623,8 +638,6 @@ obtenerTipoUsuario(tipoUsuario:number) {
         'nomProducto':this.formRegistroPedidos.controls['nomProducto'].value
 
 
-       
-
     }; 
       this.productosLista.push(objListaProducto);
       if(this.clientePedidosVencidos==0)
@@ -767,13 +780,15 @@ obtenerTipoUsuario(tipoUsuario:number) {
 
      
      registrar(values:any) {
+      //console.log("prueba")
+  
       if(this.registroUnaVez=='SI')
       {
         this.registroUnaVez='NO';
-        let idPaq;
-        this.paqueteLista.forEach(function (item) {
-          idPaq=item.idPaquete;
-        });
+        
+      }
+      //console.log(this.productosLista);
+  
         const formData = new FormData();
         //formData.append('jwt', localStorage.getItem('jwt-admin'));
         formData.append('vendedor', values['vendedor']);
@@ -786,25 +801,21 @@ obtenerTipoUsuario(tipoUsuario:number) {
           formData.append('fechaLimite', '0000-00-00');
         }
         formData.append('tipoPago', values['tipoPago']);
-        formData.append('clientes', values['idClienteSeleccionado']);
-        formData.append('paquetes', idPaq);
+        formData.append('clientes', values['cliente']);
         formData.append('descuentoTotal', values['descuentoTotal']);
         formData.append('importeParcial', values['importeParcial']);
         formData.append('total', values['totalDefinitivo']);
         formData.append('arregloProductos', JSON.stringify(this.productosLista));
         this.httpClient.post(environment.api_url + 'CrudPedidos/insertSubdistribuidores', formData).subscribe(data => {
-        //   if(data['messageError']){
-        //     Swal.fire(
-        //       'No se ha podido levantar',
-        //       data['messageError'],
-        //       'error'
-        //     )
-        //     this.registroUnaVez='SI';
-        //   }
-        // if(data['message']){
-        //   this.notificaciones.crearNotificacion(data['message'] || '¡Bien!', "fa fa-check-square-o", "info");
-        //   this.router.navigate(['/lista-ventas-subdistribuidores']);
-        // }
+        if(data['messageError']){
+            //let mensaje = data['messageError'].toString();
+             this.erroInventario(data['messageError']);
+            this.registroUnaVez='SI';
+          }
+         if(data['message']){
+          this.erroInventario(data['message']);
+           this.router.navigate(['/menu']);
+         }
         }, error => {
           this.registroUnaVez='SI';
           //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
@@ -813,6 +824,3 @@ obtenerTipoUsuario(tipoUsuario:number) {
     }
 
 
-
-
-}
