@@ -27,9 +27,12 @@
         </ion-select-option>
         </ion-select>
         <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
-
       </ion-item>
     </div>
+
+ 
+
+
 
  <div *ngIf="bloqueaCliente == 0">   
     <ion-list>
@@ -49,13 +52,30 @@
   </div>  
 </ion-card>
 
-  <div class="calendario" >
+
+  <!-- <div class="calendario" >
     <ion-card color="none" lines="none" *ngIf="tipo_pago_venta > 0" >
       <ion-item color="none" lines="none" class="ion-text-center">
         <ion-datetime formControlName ="fechaLimite" presentation="date" [preferWheel]="false"></ion-datetime>
       </ion-item>  
     </ion-card>
-  </div>
+  </div> -->
+
+  <ion-card *ngIf="tipo_pago_venta > 0" >
+    <ion-label >Fecha limite <ion-icon class="iconocarrito" name="calendar-outline"></ion-icon> </ion-label>
+    <ion-input  id="date" readonly="true"> {{this.formRegistroPedidos.controls['fechaLimite'].value}} </ion-input>
+    <ion-popover trigger="date" size="cover">
+      <ng-template>
+        <ion-datetime [showDefaultButtons]="false"
+          presentation="date" 
+          [preferWheel]="false"
+          formControlName="fechaLimite"
+          >
+        </ion-datetime>
+      </ng-template>
+    </ion-popover>
+   </ion-card>
+
 
     <ion-card>
       <ion-item color="none" lines="none" class="ion-no-border">
@@ -137,7 +157,7 @@
               </ion-label>
               <ion-icon name="trash-bin" (click)="eliminaProductoTabla(product)"></ion-icon>
             </ion-item>
-          </ion-list> 
+          </ion-list>
          </ion-card> 
         </ion-content>
       </ng-template>

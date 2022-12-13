@@ -11,7 +11,7 @@ import { productosDadosAlta } from '../../app/models/productosDadosAlta';
 import { NotificacionService } from '../services/notification.service';
 import { startWith,map } from 'rxjs/operators';
 import jwtDecode from 'jwt-decode';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-levantar-pedido',
   templateUrl: './levantar-pedido.page.html',
@@ -19,6 +19,7 @@ import jwtDecode from 'jwt-decode';
 })
 
 export class LevantarPedidoPage implements OnInit{ 
+  public dateValue: any;
   formRegistroPedidos: FormGroup;
   tipo_pago_venta = 0;
   mostrar: boolean = false;
@@ -59,7 +60,7 @@ export class LevantarPedidoPage implements OnInit{
   productosFiltrados: Observable<productosDadosAlta[]>;
   productos: productosDadosAlta[]=[];
   NOMBREPRODUCTO:Observable<productosDadosAlta[]>;
-
+  dataObject: any['']=[];
 
   constructor(formBuilder: FormBuilder,private alertController: AlertController,private httpClient: HttpClient,private notificaciones:NotificacionService,private router: Router) 
   {
@@ -125,6 +126,20 @@ export class LevantarPedidoPage implements OnInit{
   ngAfterViewInit(){
     //this.clien();
   }
+
+
+  async ionViewDidEnter() {
+    this.date = this.dataObject.Date;
+    }
+    
+      get date(): any {
+        return this.dateValue;
+      }
+    
+      set date(value: any) {
+        value = moment(value).format('YYYY-MM-DD');
+        this.dateValue = value;
+      }
 
   tipoPagos($event) {
       // console.log( $event.target.value );
