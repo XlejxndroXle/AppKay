@@ -11,6 +11,9 @@ export class PermisosService {
   idUsuario: any;
   idCliente: any;
   constructor(private httpClient: HttpClient) {}
+
+
+  
   async recuperarDatos() {
     this.tipoDeUsuario = jwt_decode(localStorage.getItem('jwt-admin'))['data'][
       'tipoUsuario'

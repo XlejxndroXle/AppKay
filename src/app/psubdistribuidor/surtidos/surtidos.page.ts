@@ -13,9 +13,14 @@ export class SurtidosPage implements OnInit {
   async ngOnInit() {
     const tipoUsuario=await this.permisos.getTipoUsuario();
     const idUsuario=await this.permisos.getIdUsuario();
+    if(tipoUsuario==3){
     await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,2,2);//cambiar numero depende de vencido o liquiedo
     this.pedidosSubSurtidos=this.pedidosService.pedidosCliente;
-    
+    }
+    if(tipoUsuario==4){
+      await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,2,2);//cambiar numero depende de vencido o liquiedo
+      this.pedidosSubSurtidos=this.pedidosService.pedidosCliente;
+      }
   }
 
 }

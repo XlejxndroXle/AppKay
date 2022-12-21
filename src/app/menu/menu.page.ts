@@ -50,6 +50,7 @@ export class MenuPage implements OnInit {
 
   // ACTIONSHEET
   async presentActionSheet() {
+    if(this.tipoUsuario==4){
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Historial de Pedidos',
       buttons: [
@@ -84,6 +85,68 @@ export class MenuPage implements OnInit {
 
     const result = await actionSheet.onDidDismiss();
     this.result = JSON.stringify(result, null, 2);
+  } 
+    //subdistribuidor
+    else if(this.tipoUsuario==3){
+      const actionSheet = await this.actionSheetCtrl.create({
+        header: 'Historial de Pedidos',
+        buttons: [
+          {
+            text: 'Pedidos asesor comercial',
+            icon: 'pricetag',
+            handler: () => {
+               this.router.navigate(['/psubdistribuidor/vencidos']);
+  
+              },
+          },
+          {
+            text: 'Cancelar',
+            icon: 'close-circle',
+            role: 'cancel',          
+            data: {
+              action: 'cancel',
+            },
+          },
+        ],
+      });
+  
+      await actionSheet.present();
+  
+      const result = await actionSheet.onDidDismiss();
+      this.result = JSON.stringify(result, null, 2);
+
+    } 
+    //vendedor
+    else if(this.tipoUsuario==2){
+      const actionSheet = await this.actionSheetCtrl.create({
+        header: 'Historial de Pedidos',
+        buttons: [
+          {
+            text: 'Pedido asesor de venta',
+            icon: 'pricetag',
+            handler: () => {
+               this.router.navigate(['/pvendedor/vencidos']);
+  
+              },
+          },
+          {
+            text: 'Cancelar',
+            icon: 'close-circle',
+            role: 'cancel',          
+            data: {
+              action: 'cancel',
+            },
+          },
+        ],
+      });
+  
+      await actionSheet.present();
+  
+      const result = await actionSheet.onDidDismiss();
+      this.result = JSON.stringify(result, null, 2);
+
+    } 
+
   }
   // CIERRE DE ACTION SHEET
 
@@ -116,9 +179,37 @@ async presentAlert() {
   this.roleMessage = `Dismissed with role: ${role}`;
 }
 
-
-
 //FIN MENSAJE
+
+
+async botonCerrarSesion() {
+  const alert = await this.alertController.create({
+    header: '¿Desea cerrar sesión?',
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+        handler: () => {
+          this.handlerMessage = 'Alert canceled';
+        },
+      },
+      {
+        text: 'Confirmo',
+        role: 'confirm',
+        handler: () => {
+          this.logout();
+          this.handlerMessage = 'Alert confirmed';
+
+        },
+      },
+    ],
+  });
+
+  await alert.present();
+
+  const { role } = await alert.onDidDismiss();
+  this.roleMessage = `Dismissed with role: ${role}`;
+}
 
 
 

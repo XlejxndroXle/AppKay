@@ -12,13 +12,17 @@ import { NotificacionService } from '../services/notification.service';
 import { startWith,map } from 'rxjs/operators';
 import jwtDecode from 'jwt-decode';
 import * as moment from 'moment';
+
 @Component({
   selector: 'app-levantar-pedido',
   templateUrl: './levantar-pedido.page.html',
   styleUrls: ['./levantar-pedido.page.scss'],
 })
 
-export class LevantarPedidoPage implements OnInit{ 
+export class LevantarPedidoPage implements OnInit{
+  itemsName:any[]=[]; 
+  itemsProduct:any[]=[];
+  isModalOpen = false;
   public dateValue: any;
   formRegistroPedidos: FormGroup;
   tipo_pago_venta = 0;
@@ -128,6 +132,95 @@ export class LevantarPedidoPage implements OnInit{
   }
 
 
+//FILTRO POR NOMBRE
+async inputChanged($event){
+  //recuperacion del valor introducido
+const value = $event.target.value;
+  //vaciar la lista si el campo esta vacio
+  if(value.length<=0){
+    this.itemsName = [];
+    return;//detener la ejecucion del script
+  }
+  //recuperacion de la lista de posibilidades
+  const list = await this.clientes;
+  this.obtenerClientes(value);
+  //filtrar la lista para extraer solo los elementos relevantes
+  const itemsName = list.filter(item => item.getNombreCliente.includes(value));
+  //asignar la lista de artículos a this.itemsName
+  //esto también mostrará la lista de propuestas en el html
+  this.itemsName = itemsName;
+  
+}
+
+
+seleccionado(clien:clientesDadosAlta, input){
+  //vacia el valor del campo de entrada
+  input.value = ''+clien.getNombreCliente;
+  this.formRegistroPedidos.controls['cliente'].setValue(clien.getIdCliente);
+  //console.log(clien)
+  //ocultar la lista de elementos vaciando la lista
+  this.itemsName = [];
+  this.obtenerLineas();
+  this.validaClientePedidosVencidos();
+ 
+}
+
+
+//FILTRO POR PRODUCTO
+async inputChangedProducto($event){
+  //recuperacion del valor introducido
+const value = $event.target.value;
+  //vaciar la lista si el campo esta vacio
+  if(value.length<=0){
+    this.itemsProduct = [];
+    return;//detener la ejecucion del script
+  }
+  //recuperacion de la lista de posibilidades
+  const list = await this.productos;
+  this.obtenerProductos(value);
+  //filtrar la lista para extraer solo los elementos relevantes
+  const itemsProduct = list.filter(item => item.getNombreProductos.includes(value));
+  //asignar la lista de artículos a this.itemsName
+  //esto también mostrará la lista de propuestas en el html
+  this.itemsProduct = itemsProduct;
+  
+}
+
+seleccionadoProducto(prod:productosDadosAlta, input){
+  //vacia el valor del campo de entrada
+  input.value = ''+prod.getNombreProductos;
+  this.formRegistroPedidos.controls['productos'].setValue(prod.getIdProductos);
+  //console.log(clien)
+  //ocultar la lista de elementos vaciando la lista
+  this.itemsProduct = [];
+  this.traerTodosLosDatosProducto(prod);
+}
+
+desabilitarNombre(){
+  this.isDisableName  = !this.isDisableName
+  }
+
+  
+  // displayCliente(cliente: clientesDadosAlta): string {
+  //   return cliente && cliente.getIdCliente ? cliente.getNombreCliente : '';
+  // }
+ 
+
+  /*private _filterProducto(value: string): productosDadosAlta[] {
+    let filterValue = value;
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toUpperCase(); // Datasource defaults to lowercase matches
+    return this.productos.filter(option => option.getNombreProductos.includes(filterValue));
+  } */ 
+
+
+
+  //CALENDARIO
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
+
   async ionViewDidEnter() {
     this.date = this.dataObject.Date;
     }
@@ -140,6 +233,7 @@ export class LevantarPedidoPage implements OnInit{
         value = moment(value).format('YYYY-MM-DD');
         this.dateValue = value;
       }
+      //FIN DE CALENDARIO
 
   tipoPagos($event) {
       // console.log( $event.target.value );
@@ -169,14 +263,12 @@ export class LevantarPedidoPage implements OnInit{
         }
       );
     }
+    
 
-    desabilitarNombre(){
-      this.isDisableName  = !this.isDisableName
-      }
 
-    desabilitarLinea(){
-        this.isDisableLine  = !this.isDisableLine
-        }
+    // desabilitarLinea(){
+    //     this.isDisableLine  = !this.isDisableLine
+    //     }
 /*
   mostrarOcultar($event) {
     if (this.mostrar) {
@@ -290,13 +382,24 @@ export class LevantarPedidoPage implements OnInit{
   }
 }
 
+async faltaProductoCarrito() {
+  const alert = await this.alertController.create({
+    header: 'Recuerda primero agregar productos al carrito, verifica el carrito de compras',
+    cssClass: 'custom-alert',
+    buttons: [
+      {
+        text: 'OK',
+        cssClass: 'alert-button-confirm',
+      },
+    ],
+  });
 
-  private _filterProducto(value: string): productosDadosAlta[] {
-    let filterValue = value;
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toUpperCase(); // Datasource defaults to lowercase matches
-    return this.productos.filter(option => option.getNombreProductos.includes(filterValue));
-  }  
+  await alert.present();
+}
+
+
+
+
 
   
   prod(){
@@ -344,9 +447,7 @@ export class LevantarPedidoPage implements OnInit{
    }
 */
 
-  /*displayCliente(cliente: clientesDadosAlta): string {
-    return cliente && cliente.getIdCliente ? cliente.getNombreCliente : '';
-  }*/
+
 
   /*bloqueoCliente(bloqCliente) {
     if (bloqCliente == 1) {
@@ -424,6 +525,7 @@ export class LevantarPedidoPage implements OnInit{
       }
       await this.httpClient.post(environment.api_url + 'CrudPedidos/obtenerClientesVendedor', formData).subscribe((data: any[]) => {
         this.clientes=[];    
+        //console.log(data)
         for (let i = 0; i < data.length; i++) {
             //this.clientes.push(new clientesDadosAlta(data[i]));
             const ii=this.clientes.findIndex(value=>value.getNombreCliente===data[i]['nombreCliente']);
@@ -509,10 +611,10 @@ obtenerTipoUsuario(tipoUsuario:number) {
     }
   }
 
-  traerTodosLosDatosProducto()
+  traerTodosLosDatosProducto(producto)
   {
-    this.traerDatosProducto(this.formRegistroPedidos.controls['productos'].value);
-    this.traerDatosProductoStockDestino(this.formRegistroPedidos.controls['productos'].value);
+    this.traerDatosProducto(producto);
+    this.traerDatosProductoStockDestino(producto);
   }
   
   traerDatosProductoStockDestino(prod:productosDadosAlta){
@@ -796,7 +898,11 @@ obtenerTipoUsuario(tipoUsuario:number) {
      
      registrar(values:any) {
       //console.log("prueba")
-  
+      if(this.formRegistroPedidos.controls['totalDefinitivo'].value==0){
+        //console.log("falta agregar podroducto")
+        this.faltaProductoCarrito();
+      }else if(this.formRegistroPedidos.controls['totalDefinitivo'].value>0){
+
       if(this.registroUnaVez=='SI')
       {
         this.registroUnaVez='NO';
@@ -822,6 +928,8 @@ obtenerTipoUsuario(tipoUsuario:number) {
         formData.append('total', values['totalDefinitivo']);
         formData.append('arregloProductos', JSON.stringify(this.productosLista));
         this.httpClient.post(environment.api_url + 'CrudPedidos/insertSubdistribuidores', formData).subscribe(data => {
+        
+          
         if(data['messageError']){
             //let mensaje = data['messageError'].toString();
              this.erroInventario(data['messageError']);
@@ -836,6 +944,7 @@ obtenerTipoUsuario(tipoUsuario:number) {
           //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
         });
       }
+    }
     }
 
 

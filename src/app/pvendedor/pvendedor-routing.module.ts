@@ -19,6 +19,10 @@ const routes: Routes = [
       {
         path: 'liquidados',
         loadChildren: () => import('./liquidados/liquidados.module').then( m => m.LiquidadosPageModule)
+      },
+      {
+        path: 'pendientes',
+        loadChildren: () => import('./pendientes/pendientes.module').then( m => m.PendientesPageModule)
       }
       
     ]

@@ -11,6 +11,13 @@
       <ion-label>Surtidos</ion-label>
     </ion-tab-button>
 
+  <div *ngIf="this.tipoUsuario!='4'">
+    <ion-tab-button tab="pendientes">
+      <ion-icon name="hourglass-outline"></ion-icon>
+      <ion-label>Pendintes</ion-label>
+    </ion-tab-button>
+  </div>
+
     <ion-tab-button tab="liquidados">
       <ion-icon name="bag-check-outline"></ion-icon>
       <ion-label>Liquidados</ion-label>

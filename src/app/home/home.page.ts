@@ -10,12 +10,6 @@ import { ToastController, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
-
-
-
-
-
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',

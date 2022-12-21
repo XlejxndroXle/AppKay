@@ -17,20 +17,30 @@
 <ion-content>
 
   <form [formGroup]="formRegistroPedidos" > 
-  <ion-card>
-    <div *ngIf="bloqueaCliente == 0">   
-      <ion-item color="none" lines="none" class="ion-no-border" >
-        <ion-label position="stacked">Nombre de cliente</ion-label>       
-        <ion-select  formControlName="cliente" interface="popover" placeholder="Seleccione el cliente"  [disabled]="isDisableName" (ionChange)="obtenerLineas(); validaClientePedidosVencidos(); desabilitarNombre()">
-        <ion-select-option *ngFor="let clien of clientes" value="{{clien.getIdCliente.toString()}}">
-        {{ clien.getNombreCliente }}
-        </ion-select-option>
-        </ion-select>
-        <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
-      </ion-item>
-    </div>
-
+    <ion-card>
+      <!-- <div *ngIf="bloqueaCliente == 0">   
+        <ion-item color="none" lines="none" class="ion-no-border" >
+          <ion-label position="stacked">Nombre de cliente</ion-label>       
+          <ion-select  formControlName="cliente" interface="popover" placeholder="Seleccione el cliente"  [disabled]="isDisableName" (ionChange)="obtenerLineas(); validaClientePedidosVencidos(); desabilitarNombre()">
+          <ion-select-option *ngFor="let clien of clientes" value="{{clien.getIdCliente.toString()}}">
+          {{ clien.getNombreCliente }}
+          </ion-select-option>
+          </ion-select>
+          <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
+        </ion-item>
+      </div>  -->
+  
  
+<div class="ion-padding" *ngIf="bloqueaCliente == 0">
+    <ion-label position="floating">Nombre de cliente</ion-label>
+    <ion-input #input [disabled]="isDisableName" (ionInput)="inputChanged($event)" type="text" placeholder="Escribe el nombre de cliente"></ion-input>
+    <ion-list [hidden]="itemsName.length<=0">
+      <ion-item  (click)="seleccionado(clien, input); desabilitarNombre()" *ngFor="let clien of clientes" color="none" lines="none">
+        {{clien.getNombreCliente}}
+      </ion-item>
+    </ion-list>
+    <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
+</div>    
 
 
 
@@ -76,25 +86,40 @@
     </ion-popover>
    </ion-card>
 
-
     <ion-card>
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked">Lineas</ion-label>
-          <ion-select interface="popover" placeholder="Seleccione la linea" formControlName="linea" [disabled]="isDisableLine" (ionChange)="obtenerProductos(''); desabilitarLinea()">
+          <ion-select interface="popover" placeholder="Seleccione la linea" formControlName="linea" (ionChange)="obtenerProductos('');">
         <ion-select-option *ngFor="let lineas of lineas" [value]="lineas.idLinea">
           {{ lineas.nombreLinea }}
         </ion-select-option>
       </ion-select>
       </ion-item>
       
-      <ion-item color="none" lines="none" class="ion-no-border">
+    
+<!-- PRODUCTO -->
+<div class="ion-padding">
+
+        <ion-label position="floating">Nombre de producto</ion-label>
+        <ion-input #input (ionInput)="inputChangedProducto($event)" type="text" placeholder="Escribe el nombre de producto"></ion-input>
+        <ion-list [hidden]="itemsProduct.length<=0">
+          <ion-item (click)="seleccionadoProducto(prod, input)" *ngFor="let prod of productos" color="none" lines="none">
+            {{prod.getNombreProductos}}
+          </ion-item>
+        </ion-list>
+</div>
+       <!-- <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked">Producto</ion-label>
           <ion-select interface="popover" placeholder="Seleccione el producto" formControlName="productos" (ionChange)="traerTodosLosDatosProducto()">
         <ion-select-option *ngFor="let prod of productos" [value]="prod">
           {{ prod.getNombreProductos }}
         </ion-select-option>
       </ion-select>
-      </ion-item>
+      </ion-item> 
+       -->
+      
+      
+      
       <ion-item color="none" lines="none" class="ion-no-border">
         <ion-label position="stacked" >Cantidad</ion-label>
         <ion-input type="number"  placeholder="Digite la cantidad de productos" formControlName="cantidadProducto" (ionChange)="calcularTotal()"></ion-input>

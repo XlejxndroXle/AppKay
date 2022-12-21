@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PermisosService } from '../services/permisos.service';
 
 @Component({
   selector: 'app-psubdistribuidor',
@@ -6,11 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./psubdistribuidor.page.scss'],
 })
 export class PsubdistribuidorPage implements OnInit {
-
-  constructor() { }
+  tipoUsuario: any;
+  constructor(private permisos:PermisosService) { }
 
   async  ngOnInit() {
-   
+    this.tipoUsuario = await this.permisos.getTipoUsuario();
+
   }
 
 }

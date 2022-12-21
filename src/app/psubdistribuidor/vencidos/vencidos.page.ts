@@ -13,9 +13,21 @@ export class VencidosPage implements OnInit {
   async ngOnInit() {
     const tipoUsuario=await this.permisos.getTipoUsuario();
     const idUsuario=await this.permisos.getIdUsuario();
-    await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,5,2);//cambiar numero depende de vencido o liquiedo
-    this.pedidosSubVencidos=this.pedidosService.pedidosCliente;
-    
+    //EL PRIMER VALOR ES EL STATUS DE PEDIDO
+    //EL SEGUNDO VALOR ES TIPO DE USUARIO 
+
+    //await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,5,2); //cambiar numero depende de vencido o liquiedo    
+    //this.pedidosSubVencidos=this.pedidosService.pedidosCliente;
+    if(tipoUsuario=='3'){
+      await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,5,2);
+      this.pedidosSubVencidos=this.pedidosService.pedidosCliente;
+    } 
+    if(tipoUsuario=='4'){
+      await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,5,2);
+      this.pedidosSubVencidos=this.pedidosService.pedidosCliente;
+    } 
+   
+    //this.pedidosSubVencidos=this.pedidosService.pedidosCliente;
   }
 
 }

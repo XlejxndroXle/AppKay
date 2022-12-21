@@ -1,5 +1,6 @@
 <ion-app>
      <!-- MENU DESPLEGABLE -->
+<!--
      <ion-menu contentId="main-content" >
       <ion-header>
         <ion-toolbar>
@@ -33,9 +34,19 @@
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
-
-
+    -->
       <!-- FIN DE MENU DESPLEGABLE -->
+
+      <ion-header >
+        <ion-toolbar>
+          <ion-item lines="none">
+            <ion-title>KAYROT</ion-title>
+            <ion-button color="mycolor" (click)="botonCerrarSesion()" >
+              <ion-icon slot="icon-only" name="power"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-toolbar>  
+      </ion-header>
  
       <!-- MENU DEL USUARIO -->
       <ion-content [fullscreen]="true" class="ion-padding ion-text-center">
@@ -95,7 +106,7 @@
   </div>
 
  
-<!-- MENU DE SUBDISTRIBUIDOR -->
+<!-- MENU DE COMERCIAL Y VENDEDOR -->
 
   <div *ngIf="this.tipoUsuario==='2' || this.tipoUsuario==='3'">
          <!-- PRIMER BOTON -->
@@ -176,5 +187,5 @@
           administrador</h1>
       </div>
     </ion-content>
-  </div>
+  <!-- </div> -->
 </ion-app>
