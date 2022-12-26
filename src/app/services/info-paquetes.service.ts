@@ -21,6 +21,7 @@ export class InfoPaquetesService {
       .toPromise()
       .then(
         (data: any[]) => {
+          //console.log(data)
           let PaqueteObjeto;
           for (let i = 0; i < data.length; i++) {
             PaqueteObjeto = {

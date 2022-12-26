@@ -15,15 +15,12 @@ export class InfovalesService {
   //Declaramos nuestras variables para conectar con las keys
   async obtenerVales() {
     this.detalleVales = [];
-    //limpia el arreglo cada que inicia la pagina
-    //mandamos a traer las keys de la api
-    //falta crear la funcion o metodo en la API de Alex
     await this.httpClient
       .get(environment.api_url + 'CrudVales/listaValesMovil')
       .toPromise()
       .then(
         (data: any[]) => {
-          //  console.log(data);
+          //console.log(data);
           //Lleno el arreglo de pedidos
           let valeObjeto;
           for (let i = 0; i < data.length; i++) {

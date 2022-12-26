@@ -18,14 +18,14 @@
 
   <ion-card *ngFor="let liquidados of pedidosLiquidados">
     <ion-item  lines="none">
-      <ion-icon class="icono" color="dark" button="" slot="end" name="ellipsis-horizontal-outline"  [routerLink]="['/detalle-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+      <ion-icon class="icono" color="dark" button="" slot="end" name="ellipsis-horizontal-outline"  [routerLink]="['/detalle-pedido/'+liquidados.idPedido]"  routerLinkActive="router-link-active"></ion-icon>
       <h6>Pedido #{{liquidados.idPedido}} - {{liquidados.nombre_estatus}}</h6>
     </ion-item>
     <ion-item lines="none" >
       <ion-label>Cliente: {{liquidados.nombreCliente}}</ion-label>
     </ion-item>
       <ion-item>
-        <ion-icon class="icono" color="dark" button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+        <ion-icon class="icono" color="dark" button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido/'+liquidados.idPedido]"  routerLinkActive="router-link-active"></ion-icon>
       Asesor: {{liquidados.nombre}}
     </ion-item>
     <ion-item>

@@ -1,48 +1,81 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="psubdistribuidor"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Cobro del Pedido</ion-title>
-  </ion-toolbar>
+<ion-header >
+  <ion-toolbar >
+    <ion-item lines="none">
+      <ion-title>Cobro de pedidos</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="menu"></ion-back-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-toolbar>  
 </ion-header>
-
-
   <ion-content>
-    <ion-card>
-      <ion-item lines="full">
-        <p>Fecha de cobro <br> 
-          2022-Marzo-02</p>
-          <p slot="end">No. Cobranza <br>|#100</p>
-          
-      </ion-item>
-      
-      <ion-item lines="none">
-        <p>Cantidad</p>
-        <p slot="end">$860.00</p>
-      </ion-item>
-
-      <ion-item lines="none">
-        <p>Forma de Pago</p>
-        <p slot="end">Deposito Bancario</p>
-      </ion-item>
-
-      <ion-item lines="full">
-        <p>Autorizador por</p>
-        <p slot="end">Selene</p>
-      </ion-item>
+<!-- TOTALES -->
+    <ion-card *ngIf="objetoDatosCobro">
       <ion-item lines="none">
         <p><b>Total del Pedido</b></p>
-        <p slot="end">$860.00</p>
+        <p slot="end">${{objetoDatosCobro.total}}</p>
       </ion-item>
       <ion-item lines="full">
         <p><b>Resta por pagar</b></p>
-      <p slot="end">$00.00</p>
+      <p slot="end">${{objetoDatosCobro.total_restante}}</p>
       </ion-item>
-
-
-     
     </ion-card>
-  
+
+<!-- COBRAR -->
+
+    <div *ngIf="this.tipoEstado==='2' || this.tipoEstado==='5'">  
+      <form [formGroup]="formularioAsignacion" > 
+      <ion-card *ngIf="objetoDatosCobro">
+      <ion-item lines="full">
+        <p>Fecha limite<br> 
+          {{objetoDatosCobro.fechaLimitePago}}</p> 
+      </ion-item>
+        <ion-item color="none" lines="none">
+          <ion-label position="floating" >Nuevo cobro</ion-label>
+          <ion-input type="number" placeholder="Digite la cantidad $" formControlName="nuevoCobro"></ion-input>
+          
+        </ion-item>
+        <ion-item color="none" lines="none" class="ion-no-border">
+          <ion-label position="stacked">Forma de cobro</ion-label>
+            <ion-select interface="popover" placeholder="Seleccione la forma de cobro" formControlName="formaCobro">
+          <ion-select-option *ngFor="let formasDeCobro of formasDeCobro" [value]="formasDeCobro.idFormaDeCobro">
+            {{ formasDeCobro.nombreFormaDeCobro }}
+          </ion-select-option>
+        </ion-select>
+        </ion-item>
+      
+      
+        <ion-button color="mycolor" type="submit" expand="block" (click)="aceptarCobro();">
+          REGISTRAR COBRO</ion-button>
+      </ion-card>
+      </form>
+    </div>
+
+ <!-- DATOS GENERALES    -->
+ <h3>Historial de cobros</h3>
+    <ion-card *ngFor="let cobro of objListaCobro">
+      <ion-item lines="full">
+        <p>Fecha de cobro <br> 
+          {{cobro.fechaCobro | date:'dd/MM/yyyy'}}</p> 
+          <!-- <p slot="end">No. Cobro <br>|#{{objetoDatosCobro.idPedido}} </p> -->
+      </ion-item>
+      <ion-item lines="none">
+        <p>Cantidad</p>
+        <p slot="end"> <b>{{cobro.cantidad}}</b></p>
+      </ion-item>
+      <ion-item lines="none">
+        <p>Forma de Pago</p>
+        <p slot="end">{{cobro.nombre_forma}}</p>
+      </ion-item>
+      <ion-item lines="full">
+        <p>Autorizador por</p>
+        <p slot="end">{{cobro.nombre}}</p>
+      </ion-item>
+    </ion-card>
+
+
   </ion-content>
+  
+
+    
   

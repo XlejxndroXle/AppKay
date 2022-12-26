@@ -21,14 +21,14 @@
   <ion-card *ngFor="let pedido of pedidos">
     <!-- CAMBIOS -->
     <ion-item  lines="none" >
-      <ion-icon class="icono" color="dark" button="" slot="end" name="ellipsis-horizontal-outline" [routerLink]="['/detalle-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+      <ion-icon class="icono" color="dark" button="" slot="end" name="ellipsis-horizontal-outline" [routerLink]="['/detalle-pedido/'+pedido.idPedido]"  routerLinkActive="router-link-active"></ion-icon>
       <h6>Pedido #{{pedido.idPedido}} - {{pedido.nombre_estatus}}</h6>
     </ion-item>
     <ion-item lines="none" >
       <ion-label>Cliente: {{pedido.nombreCliente}}</ion-label>
     </ion-item>
       <ion-item>
-        <ion-icon class="icono" color="dark"  button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido']"  routerLinkActive="router-link-active"></ion-icon>
+        <ion-icon class="icono" color="dark"  button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido/'+pedido.idPedido]"  routerLinkActive="router-link-active"></ion-icon>
        Asesor:{{pedido.nombre}}
     </ion-item>
     <ion-item>

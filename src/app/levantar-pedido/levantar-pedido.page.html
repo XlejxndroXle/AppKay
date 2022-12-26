@@ -1,7 +1,9 @@
 <ion-header >
   <ion-toolbar >
     <ion-item lines="none">
-      <ion-title>Alta de pedidos</ion-title>
+
+      <ion-title *ngIf="accion==1">Alta de pedido</ion-title>
+      <ion-title *ngIf="accion==2">Editar pedido</ion-title>
       <ion-buttons slot="start">
         <ion-back-button defaultHref="menu"></ion-back-button>
       </ion-buttons>
@@ -16,21 +18,24 @@
 </ion-header>
 <ion-content>
 
-  <form [formGroup]="formRegistroPedidos" > 
-    <ion-card>
-      <!-- <div *ngIf="bloqueaCliente == 0">   
-        <ion-item color="none" lines="none" class="ion-no-border" >
-          <ion-label position="stacked">Nombre de cliente</ion-label>       
-          <ion-select  formControlName="cliente" interface="popover" placeholder="Seleccione el cliente"  [disabled]="isDisableName" (ionChange)="obtenerLineas(); validaClientePedidosVencidos(); desabilitarNombre()">
-          <ion-select-option *ngFor="let clien of clientes" value="{{clien.getIdCliente.toString()}}">
-          {{ clien.getNombreCliente }}
-          </ion-select-option>
-          </ion-select>
-          <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
-        </ion-item>
-      </div>  -->
-  
+<form [formGroup]="formRegistroPedidos" > 
+    <ion-card> 
+      <div *ngIf="this.tipoUsuarioLogueado==='2'">  
+  <ion-item color="none" lines="none" class="ion-no-border">
+    <ion-label position="stacked">Almacen</ion-label>
+      <ion-select interface="popover" placeholder="Seleccione el Almacen" formControlName="almacenes">
+    <ion-select-option *ngFor="let almacen of almacenes" [value]="almacen.idAlmacen">
+      {{ almacen.nombreAlmacen }}
+    </ion-select-option>
+  </ion-select>
+  <!-- <ion-note color="danger" *ngIf="formRegistroPedidos.controls['almacenes'].hasError('required')">Este campo es obligatorio</ion-note> -->
+  </ion-item>
+</div> 
  
+<div *ngIf="accion==1">
+<!-- ALMACEN PARA VENDEDOR -->
+
+
 <div class="ion-padding" *ngIf="bloqueaCliente == 0">
     <ion-label position="floating">Nombre de cliente</ion-label>
     <ion-input #input [disabled]="isDisableName" (ionInput)="inputChanged($event)" type="text" placeholder="Escribe el nombre de cliente"></ion-input>
@@ -41,7 +46,14 @@
     </ion-list>
     <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
 </div>    
-
+</div>
+<div *ngIf="accion==2">
+  <div class="ion-padding" *ngIf="bloqueaCliente == 0">
+      <ion-label position="floating">Nombre de cliente</ion-label>
+      <ion-input #input [disabled]="isDisableName"  type="text" formControlName="nomCliente"></ion-input>
+      <ion-note color="danger" *ngIf="formRegistroPedidos.controls['cliente'].hasError('required')">Este campo es obligatorio</ion-note>
+  </div>    
+  </div>
 
 
  <div *ngIf="bloqueaCliente == 0">   
@@ -62,14 +74,6 @@
   </div>  
 </ion-card>
 
-
-  <!-- <div class="calendario" >
-    <ion-card color="none" lines="none" *ngIf="tipo_pago_venta > 0" >
-      <ion-item color="none" lines="none" class="ion-text-center">
-        <ion-datetime formControlName ="fechaLimite" presentation="date" [preferWheel]="false"></ion-datetime>
-      </ion-item>  
-    </ion-card>
-  </div> -->
 
   <ion-card *ngIf="tipo_pago_venta > 0" >
     <ion-label >Fecha limite <ion-icon class="iconocarrito" name="calendar-outline"></ion-icon> </ion-label>
@@ -101,22 +105,14 @@
 <div class="ion-padding">
 
         <ion-label position="floating">Nombre de producto</ion-label>
-        <ion-input #input (ionInput)="inputChangedProducto($event)" type="text" placeholder="Escribe el nombre de producto"></ion-input>
+        <ion-input #input formControlName="vistaProducto" (ionInput)="inputChangedProducto($event)" type="text" placeholder="Escribe el nombre de producto"></ion-input>
         <ion-list [hidden]="itemsProduct.length<=0">
           <ion-item (click)="seleccionadoProducto(prod, input)" *ngFor="let prod of productos" color="none" lines="none">
             {{prod.getNombreProductos}}
           </ion-item>
         </ion-list>
 </div>
-       <!-- <ion-item color="none" lines="none" class="ion-no-border">
-        <ion-label position="stacked">Producto</ion-label>
-          <ion-select interface="popover" placeholder="Seleccione el producto" formControlName="productos" (ionChange)="traerTodosLosDatosProducto()">
-        <ion-select-option *ngFor="let prod of productos" [value]="prod">
-          {{ prod.getNombreProductos }}
-        </ion-select-option>
-      </ion-select>
-      </ion-item> 
-       -->
+
       
       
       
@@ -206,9 +202,11 @@
       <ion-input [disabled]="true">${{this.formRegistroPedidos.controls['totalDefinitivo'].value}}</ion-input>
     </ion-item>
   </ion-card>
+
   <div class="bottonOkay">
     <ion-button color="mycolor" type="submit" expand="block" (click)="(formRegistroPedidos.valid) ? registrar(formRegistroPedidos.value): null">
       Guardar</ion-button>
   </div>
+
 </form>
 </ion-content>

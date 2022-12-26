@@ -7,7 +7,10 @@ import { environment } from '../../environments/environment';
 })
 export class PedidosService {
   pedidosCliente: any[] = []; //Arreglo para almacenar los pedidos
+  statusCliente;
   constructor(private httpClient: HttpClient) {}
+
+
   async obtnerPedidosCliente(tipoUsuario, idUsuario, estatus, tipo) {
     this.pedidosCliente = []; //limpia el arreglo cada que inicia la pagina
     const formData = new FormData();
@@ -43,4 +46,35 @@ export class PedidosService {
         }
       );
   }
+
+
+
+/*
+  async getStatus(estatus){
+    this.statusCliente = [];
+     const formData = new FormData();
+    formData.append('status', estatus);
+    await this.httpClient
+    .post(environment.api_url + 'CrudPedidos/listaPedidosMovil', formData)
+    .toPromise()
+    .then(
+      (data: any[]) => {
+        console.log(data);
+        //Lleno el arreglo de pedidos
+        let statusObjeto;
+        for (let i = 0; i < data.length; i++) {
+          statusObjeto = {
+            status: data[i].status,
+          };
+          this.statusCliente.push(statusObjeto);
+        }
+      },
+      (error) => {
+        // eslint-disable-next-line @typescript-eslint/quotes
+        //this.presentToast("Datos incorrectos");
+      }
+    );
+  }
+*/
+
 }

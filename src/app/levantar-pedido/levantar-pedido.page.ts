@@ -12,6 +12,7 @@ import { NotificacionService } from '../services/notification.service';
 import { startWith,map } from 'rxjs/operators';
 import jwtDecode from 'jwt-decode';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-levantar-pedido',
@@ -56,7 +57,8 @@ export class LevantarPedidoPage implements OnInit{
   botonCalcularTotal=0;
   isDisableName = false;
   isDisableLine = false;
-
+  accion:any;
+  idPedido:any;
   clientesFiltrados: Observable<clientesDadosAlta[]>;
   clientes: clientesDadosAlta[]=[];
   //NOMBRECLIENTE:Observable<clientesDadosAlta[]>;
@@ -65,8 +67,9 @@ export class LevantarPedidoPage implements OnInit{
   productos: productosDadosAlta[]=[];
   NOMBREPRODUCTO:Observable<productosDadosAlta[]>;
   dataObject: any['']=[];
-
-  constructor(formBuilder: FormBuilder,private alertController: AlertController,private httpClient: HttpClient,private notificaciones:NotificacionService,private router: Router) 
+  almacenes:any[]=[];
+  objetoDatosPedido;
+  constructor(formBuilder: FormBuilder,private alertController: AlertController,private httpClient: HttpClient,private notificaciones:NotificacionService,private router: Router,private activatedRoute: ActivatedRoute) 
   {
     this.tipoUsuarioLogueado = jwtDecode(localStorage.getItem('jwt-admin'))['data']['tipoUsuario'];
     this.idUsuarioLogueado = jwtDecode(localStorage.getItem('jwt-admin'))['data']['idUsuario'];
@@ -105,6 +108,10 @@ export class LevantarPedidoPage implements OnInit{
       idClienteSeleccionado:[''],
       idProductoSeleccionado:[''],
       descuentoGeneral:[''],
+      nomCliente:[''],
+      vistaProducto:[''],
+      almacenes:['']
+
       
 
     });
@@ -118,14 +125,78 @@ export class LevantarPedidoPage implements OnInit{
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     
     if(this.tipoUsuarioLogueado==3)
     {
       this.obtenerClientes('')
     }
+    if(this.tipoUsuarioLogueado==2){
+      this.obtenerAlmacenes();
+    }
     this.presentingElement = document.querySelector('.ion-page');
+    this.accion = this.activatedRoute.snapshot.paramMap.get('accion');
+    this.idPedido = this.activatedRoute.snapshot.paramMap.get('idPedido');
+    //console.log("idPedido"+this.idPedido+"accion"+this.accion);
+    if(this.accion==2){
+      await this.mostrarPedido(this.idPedido);
+      //console.log(this.objetoDatosPedido);
+      this.formRegistroPedidos.controls['cliente'].setValue(this.objetoDatosPedido['cliente']);
+      this.formRegistroPedidos.controls['nomCliente'].setValue(this.objetoDatosPedido['nombreCliente']);
+      this.isDisableName=true;
+      this.formRegistroPedidos.controls['tipoPago'].setValue(this.objetoDatosPedido['tipoPago']);
+      this.formRegistroPedidos.controls['vendedor'].setValue(this.objetoDatosPedido['idUsuario']);
+      this.formRegistroPedidos.controls['tipoUsuario'].setValue(this.objetoDatosPedido['tipoUsuario']);
+      this.formRegistroPedidos.controls['importeParcial'].setValue(this.objetoDatosPedido['totalSinDescuento']);
+      this.formRegistroPedidos.controls['descuentoTotal'].setValue(this.objetoDatosPedido['descuentoTotal']);
+      this.formRegistroPedidos.controls['totalDefinitivo'].setValue(this.objetoDatosPedido['total']);
+      this.mostrarPedidoProducto(this.idPedido);
+      this.obtenerLineas();
+      this.validaClientePedidosVencidos();
+      this.descuentoTotalVar+=Number(this.objetoDatosPedido['descuentoTotal']);
+      this.importeParcialVar+=Number(this.objetoDatosPedido['totalSinDescuento']);
+      this.totalsinDescuento=(this.importeParcialVar-this.descuentoTotalVar);
+   
+      //input.value = ''+clien.getNombreCliente;
+    }
+   
   }
+
+  async mostrarPedido(idPedido) {
+    const formData = new FormData();
+    formData.append('idPedido', idPedido);
+    await this.httpClient
+      .post(environment.api_url + 'CrudPedidos/consultaPedidoMovil', formData)
+      .toPromise()
+      .then((data) => {
+        // console.log(data)
+        this.objetoDatosPedido = {
+          cliente: data['cliente'],
+          correoElectronico: data['correoElectronico'],
+          descuentoTotal: data['descuentoTotal'],
+          fecha: data['fecha'],
+          fechaLimitePago: data['fechaLimitePago'],
+          idPedido: data['idPedido'],
+          idUsuario: data['idUsuario'],
+          nombre: data['nombre'],
+          nombreCliente: data['nombreCliente'],
+          paquete: data['paquete'],
+          status: data['status'],
+          subdistribuidor: data['subdistribuidor'],
+          telCelular: data['telCelular'],
+          telFijo: data['telFijo'],
+          tipoPago: data['tipoPago'],
+          tipoPedido: data['tipoPedido'],
+          tipoUsuario: data['tipoUsuario'],
+          total: data['total'],
+          totalSinDescuento: data['totalSinDescuento'],
+        };
+
+  //      this.tipoEstado=data['status'];
+        //console.log(data[i].nombreProveedor);
+      });
+    }
+
 
   ngAfterViewInit(){
     //this.clien();
@@ -190,10 +261,20 @@ seleccionadoProducto(prod:productosDadosAlta, input){
   //vacia el valor del campo de entrada
   input.value = ''+prod.getNombreProductos;
   this.formRegistroPedidos.controls['productos'].setValue(prod.getIdProductos);
-  //console.log(clien)
-  //ocultar la lista de elementos vaciando la lista
-  this.itemsProduct = [];
-  this.traerTodosLosDatosProducto(prod);
+  if(this.tipoUsuarioLogueado==2){
+    if(this.formRegistroPedidos.controls['almacenes'].value==null){
+      this.alertaProductoAgregado();
+    } else{
+      this.itemsProduct = [];
+      this.traerTodosLosDatosProducto(prod);
+    }
+    
+  }
+  if(this.tipoUsuarioLogueado==3){
+    this.itemsProduct = [];
+    this.traerTodosLosDatosProducto(prod);
+  }
+  
 }
 
 desabilitarNombre(){
@@ -514,7 +595,7 @@ async faltaProductoCarrito() {
       //this.clientes=[];
       const formData = new FormData();
       formData.append('cliente',fitro)
-      if(this.tipoUsuarioLogueado==3)
+      if(this.tipoUsuarioLogueado==3 || this.tipoUsuarioLogueado==2)
       {
         //this.obtenerClientes(this.idUsuarioLogueado);
         this.formRegistroPedidos.controls['vendedor'].setValue(this.idUsuarioLogueado)
@@ -620,12 +701,58 @@ obtenerTipoUsuario(tipoUsuario:number) {
   traerDatosProductoStockDestino(prod:productosDadosAlta){
     const formData = new FormData();
     formData.append('idProducto',prod.getIdProductos.toString());
-    formData.append('idSubdistribuidor',this.formRegistroPedidos.controls['vendedor'].value);
+    
+    
+    if(this.tipoUsuarioLogueado==3){
+      formData.append('idSubdistribuidor',this.formRegistroPedidos.controls['vendedor'].value);
     this.httpClient.post(environment.api_url + 'CrudProductos/consultaDatosProductosPedidoSubdistribuidor',formData).subscribe(
       (data: any[]) => {
         this.formRegistroPedidos.controls['stockSubdistribuidor'].setValue(data['stock']);
       },
 
+      error => {
+        this.notificaciones.crearNotificacion(
+          error['error']['message'] || 'Error desconocido.',
+          'fa fa-times',
+          'error'
+        );
+      }
+    );
+    }
+    if(this.tipoUsuarioLogueado==2){
+      formData.append('idSucursal',this.formRegistroPedidos.controls['almacenes'].value);
+      this.httpClient.post(environment.api_url + 'CrudCompras/obtenerDatosProductoCompraStock',formData).subscribe(
+        (data: any[]) => {
+          this.formRegistroPedidos.controls['stockSubdistribuidor'].setValue(data['stock']);
+        },
+  
+        error => {
+          this.notificaciones.crearNotificacion(
+            error['error']['message'] || 'Error desconocido.',
+            'fa fa-times',
+            'error'
+          );
+        }
+      );
+    }
+
+
+
+  }
+
+  obtenerAlmacenes(){
+    this.httpClient.get(environment.api_url + 'CrudSucursales/listarSucursales').subscribe(
+      (data: any[]) => {
+        for (let i = 0; i < data.length; i++) {
+          let almacen = {
+            idAlmacen: data[i]['idSucursal'],
+            nombreAlmacen: data[i]['nombreSucursal']
+          }
+          this.almacenes.push(
+            almacen
+          );
+        }
+      },
       error => {
         this.notificaciones.crearNotificacion(
           error['error']['message'] || 'Error desconocido.',
@@ -726,7 +853,7 @@ obtenerTipoUsuario(tipoUsuario:number) {
     this.formRegistroPedidos.controls['importeProducto'].setValue(subtotal.toFixed(2));
     this.formRegistroPedidos.controls['cantidadDescuento'].setValue(descuento.toFixed(2));
     this.formRegistroPedidos.controls['cantidadImporte'].setValue(importe.toFixed(2));
-   
+    
 /*      
     this.formRegistroPedidos.controls['cantidadImporte'].setValue(importe.toFixed(2)); */
     
@@ -734,6 +861,33 @@ obtenerTipoUsuario(tipoUsuario:number) {
     //this.formRegistroPedidos.controls['descuentoTotal'].setValue(descs.toFixed(2));
  
    }
+   
+   async mostrarPedidoProducto(idPedido){
+    const formData = new FormData();
+    formData.append('idPedido', idPedido);
+    await this.httpClient
+      .post(environment.api_url + 'CrudPedidos/consultaPedidoProductos',formData)
+      .toPromise()
+      .then((data: any[]) => {
+         //console.log(data)
+          for (let i = 0; i < data.length; i++) {
+            let objListaProd;
+             objListaProd = {
+              cantidadProducto: data[i].cantidadProducto,
+              productos:data[i].producto,
+              precioProducto: data[i].precioUnitario,
+              descuento: data[i].descuento,
+              totalProducto: data[i].importeTotal,
+               nomProducto: data[i].nombreProducto
+              
+              
+            };
+            this.productosLista.push(objListaProd)
+          }
+        }
+      );
+  }
+
 
    armaTablaProductos() {
     if((this.formRegistroPedidos.controls['cantidadProducto'].value!="" &&  this.formRegistroPedidos.controls['cantidadProducto'].value!=null) && 
@@ -770,7 +924,17 @@ obtenerTipoUsuario(tipoUsuario:number) {
     //     'error'
     //   )
     // }    
-  }
+    //limpiar los controles 
+    this.formRegistroPedidos.controls['linea'].setValue('');
+    this.formRegistroPedidos.controls['vistaProducto'].setValue('');
+    this.formRegistroPedidos.controls['cantidadProducto'].setValue('');
+    this.formRegistroPedidos.controls['descuento'].setValue('');
+    this.formRegistroPedidos.controls['stockSubdistribuidor'].setValue('');
+    this.formRegistroPedidos.controls['precioProducto'].setValue('');
+    //this.formRegistroPedidos.controls['precioProducto'].setValue('');
+    this.formRegistroPedidos.controls['cantidadImporte'].setValue('');
+
+    }
 
   emiteTotal() {
     //this.formRegistroPedidos.controls['descuentoTotal'].setValue(descuento);
@@ -897,6 +1061,8 @@ obtenerTipoUsuario(tipoUsuario:number) {
 
      
      registrar(values:any) {
+      //console.log(this.accion+"accion");
+      //console.log(this.tipoUsuarioLogueado+"tipo");
       //console.log("prueba")
       if(this.formRegistroPedidos.controls['totalDefinitivo'].value==0){
         //console.log("falta agregar podroducto")
@@ -927,22 +1093,88 @@ obtenerTipoUsuario(tipoUsuario:number) {
         formData.append('importeParcial', values['importeParcial']);
         formData.append('total', values['totalDefinitivo']);
         formData.append('arregloProductos', JSON.stringify(this.productosLista));
-        this.httpClient.post(environment.api_url + 'CrudPedidos/insertSubdistribuidores', formData).subscribe(data => {
         
-          
-        if(data['messageError']){
-            //let mensaje = data['messageError'].toString();
-             this.erroInventario(data['messageError']);
-            this.registroUnaVez='SI';
+        if(this.accion==1){
+            if(this.tipoUsuarioLogueado==3)
+            {
+          this.httpClient.post(environment.api_url + 'CrudPedidos/insertSubdistribuidores', formData).subscribe(data => {
+            if(data['messageError']){
+                //let mensaje = data['messageError'].toString();
+                 this.erroInventario(data['messageError']);
+                this.registroUnaVez='SI';
+              }
+             if(data['message']){
+              this.erroInventario(data['message']);
+               this.router.navigate(['/menu']);
+             }
+            }, error => {
+              this.registroUnaVez='SI';
+              //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
+            });
           }
-         if(data['message']){
-          this.erroInventario(data['message']);
-           this.router.navigate(['/menu']);
+          if(this.tipoUsuarioLogueado==2){
+            formData.append('idAlmacen', values['almacenes']);
+            this.httpClient.post(environment.api_url + 'CrudPedidos/insert', formData).subscribe(data => {
+              if(data['messageError']){
+                  //let mensaje = data['messageError'].toString();
+                   this.erroInventario(data['messageError']);
+                  this.registroUnaVez='SI';
+                }
+               if(data['message']){
+                this.erroInventario(data['message']);
+                 this.router.navigate(['/menu']);
+               }
+              }, error => {
+                this.registroUnaVez='SI';
+                //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
+              });
+          }
+
+        }
+        
+        if(this.accion==2){
+          if(this.tipoUsuarioLogueado==3){
+          formData.append('idPedido', this.idPedido);
+          formData.append('idSubdistribuidor',values['vendedor']);
+          this.httpClient.post(environment.api_url + 'CrudPedidos/actualizaVentasSubdsitribuidor', formData).subscribe(data => {
+            if(data['messageError']){
+                //let mensaje = data['messageError'].toString();
+                 this.erroInventario(data['messageError']);
+                this.registroUnaVez='SI';
+              }
+             if(data['message']){
+              this.erroInventario(data['message']);
+               this.router.navigate(['/menu']);
+             }
+            }, error => {
+              this.registroUnaVez='SI';
+              //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
+            });
          }
-        }, error => {
-          this.registroUnaVez='SI';
-          //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
-        });
+
+         if(this.tipoUsuarioLogueado==2){
+          formData.append('idPedido', this.idPedido);
+          //formData.append('idSubdistribuidor',values['vendedor']);
+          formData.append('idAlmacen', values['almacenes']);
+          this.httpClient.post(environment.api_url + 'CrudPedidos/actualiza', formData).subscribe(data => {
+            if(data['messageError']){
+                //let mensaje = data['messageError'].toString();
+                 this.erroInventario(data['messageError']);
+                this.registroUnaVez='SI';
+              }
+             if(data['message']){
+              this.erroInventario(data['message']);
+               this.router.navigate(['/menu']);
+             }
+            }, error => {
+              this.registroUnaVez='SI';
+              //this.notificaciones.crearNotificacion(error['error']['message'] || 'Error desconocido.', "fa fa-times", "error");
+            });
+         }
+
+
+        }
+
       }
     }
     }

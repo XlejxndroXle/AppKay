@@ -15,20 +15,20 @@
     <p>Presione <ion-icon name="ellipsis-horizontal-outline"></ion-icon> para ver los detalles del pedido. <br>
     Presione <ion-icon name="cash-outline"></ion-icon> para ver los pagos del pedido.</p>
   </ion-item>
-  <ion-card *ngFor="let vencidos of pedidosSubSurtidos">
+  <ion-card *ngFor="let surtido of pedidosSubSurtidos">
     <ion-item  lines="none">
-      <ion-icon color="black" class="icono" button="" slot="end" name="ellipsis-horizontal-outline" [routerLink]="['/detalle-pedido']"  routerLinkActive="router-link-active"></ion-icon>
-      <h6>Pedido #{{vencidos.idPedido}} - {{vencidos.nombre_estatus}}</h6>
+      <ion-icon color="black" class="icono" button="" slot="end" name="ellipsis-horizontal-outline" [routerLink]="['/detalle-pedido-sub/'+surtido.idPedido]"  routerLinkActive="router-link-active"></ion-icon>
+      <h6>Pedido #{{surtido.idPedido}} - {{surtido.nombre_estatus}}</h6>
     </ion-item>
     <ion-item lines="none">
-      <ion-label>Cliente: {{vencidos.nombreCliente}}</ion-label>
+      <ion-label>Cliente: {{surtido.nombreCliente}}</ion-label>
     </ion-item>
       <ion-item>
-        <ion-icon color="black" class="icono" button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido']"  routerLinkActive="router-link-active"></ion-icon>
-      <ion-label>Asesor: {{vencidos.nombre}}</ion-label>
+        <ion-icon color="black" class="icono" button="" slot="end" name="cash-outline" [routerLink]="['/cobro-pedido-sub/'+surtido.idPedido]"  routerLinkActive="router-link-active"></ion-icon>
+      <ion-label>Asesor: {{surtido.nombre}}</ion-label>
     </ion-item>
     <ion-item>
-      <p>{{vencidos.fecha | date:'dd/MM/yyy'}}</p>
+      <p>{{surtido.fecha | date:'dd/MM/yyy'}}</p>
     </ion-item>
   </ion-card>
 

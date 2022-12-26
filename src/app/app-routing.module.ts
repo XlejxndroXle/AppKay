@@ -44,19 +44,19 @@ const routes: Routes = [
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
   },
   {
-    path: 'detalle-pedido',
+    path: 'detalle-pedido/:idDetallePedidoVendedor',
     loadChildren: () => import('./detalle-pedido/detalle-pedido.module').then( m => m.DetallePedidoPageModule)
   },
   {
-    path: 'cobro-pedido',
+    path: 'cobro-pedido/:idCobroPedidoVendedor',
     loadChildren: () => import('./cobro-pedido/cobro-pedido.module').then( m => m.CobroPedidoPageModule)
   },
   {
-    path: 'cobro-pedido-sub',
+    path: 'cobro-pedido-sub/:idCobroPedidoSub',
     loadChildren: () => import('./cobro-pedido-sub/cobro-pedido-sub.module').then( m => m.CobroPedidoSubPageModule)
   },
   {
-    path: 'detalle-pedido-sub',
+    path: 'detalle-pedido-sub/:idDetallePedido',
     loadChildren: () => import('./detalle-pedido-sub/detalle-pedido-sub.module').then( m => m.DetallePedidoSubPageModule)
   },
   {
@@ -76,9 +76,17 @@ const routes: Routes = [
     loadChildren: () => import('./forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
   },
   {
-    path: 'levantar-pedido',
+    path: 'levantar-pedido/:accion/:idPedido',
     loadChildren: () => import('./levantar-pedido/levantar-pedido.module').then( m => m.LevantarPedidoPageModule)
   },
+  {
+    path: 'editar-pedido-sub/:idPedidoSub',
+    loadChildren: () => import('./editar-pedido-sub/editar-pedido-sub.module').then( m => m.EditarPedidoSubPageModule)
+  },
+  {
+    path: 'editar-pedido/:idPedidoVen',
+    loadChildren: () => import('./editar-pedido/editar-pedido.module').then( m => m.EditarPedidoPageModule)
+  }
 ];
 
 @NgModule({
