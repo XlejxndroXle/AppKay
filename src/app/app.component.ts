@@ -12,7 +12,7 @@ export class AppComponent {
   result: string;
 
   constructor(private pushService:PushService) {
-    // this.pushService.OneSignalInit();
+     //this.pushService.OneSignalInit();
   }
 
 }

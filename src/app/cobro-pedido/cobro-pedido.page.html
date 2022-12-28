@@ -13,6 +13,10 @@
   <ion-content>
 <!-- TOTALES -->
     <ion-card *ngIf="objetoDatosCobro">
+      <ion-item color="none" lines="none" class="ion-no-margin">
+        <ion-label>No. Pedido</ion-label>
+        <ion-badge color="mycolor">{{idPedido}}</ion-badge>
+      </ion-item>
       <ion-item lines="none">
         <p><b>Total del Pedido</b></p>
         <p slot="end">${{objetoDatosCobro.total}}</p>
@@ -25,6 +29,7 @@
 
  <!-- DATOS GENERALES    -->
     <ion-card *ngFor="let cobro of objListaCobroVendedor">
+
       <ion-item lines="full">
         <p>Fecha de cobro <br> 
           {{cobro.fechaCobro | date:'dd/MM/yyyy'}}</p> 

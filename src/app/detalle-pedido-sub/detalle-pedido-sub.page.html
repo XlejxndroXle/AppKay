@@ -25,9 +25,12 @@
     <h5><b>Cantidad a pagar</b></h5>
   </ion-item>
   <ion-card *ngIf="objetoDatosPedido">
+    <ion-item color="none" lines="none" >
+      <ion-label>No. Pedido</ion-label>
+      <ion-badge color="mycolor">{{pedido}}</ion-badge>
+    </ion-item>
     <ion-item  lines="full">
       <h6>{{objetoDatosPedido.fecha | date:'dd/MM/yyyy'}}</h6> 
-      <h6 slot="end">|#{{objetoDatosPedido.idPedido}}</h6>
     </ion-item>
     
     <ion-item lines="none">

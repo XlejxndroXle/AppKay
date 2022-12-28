@@ -12,11 +12,12 @@ export class PushService {
     OneSignal.setAppId('6daa61c3-a98f-4ec8-9642-87960645983d');
  
     OneSignal.setNotificationOpenedHandler( notification => {
-      console.log('setNotificationOpenedHandler: ', notification);
+      console.log('establecer el controlador abierto de notificaciones: ', notification);
+      notification;
     });
- 
-    OneSignal.setNotificationWillShowInForegroundHandler(notification => {
-      console.log('setNotificationWillShowInForegroundHandler: ', notification);
+
+    OneSignal.setNotificationWillShowInForegroundHandler(notificationP => {
+      console.log('establecer la notificación se mostrará en el controlador de primer plano: ', notificationP);
     });
  
     OneSignal.promptForPushNotificationsWithUserResponse((accepted) => {
@@ -24,6 +25,7 @@ export class PushService {
     });
 
   }
+
 
  
 //  OneSignalInit(){
