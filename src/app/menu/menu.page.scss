@@ -8,6 +8,12 @@ ion-content{
  }
 
 
+ /* iOS places the subtitle above the title */
+ion-card-header.ios {
+  display: flex;
+  flex-flow: column-reverse;
+}
+
 
   .ops{
     margin-top: 20px;
@@ -40,6 +46,12 @@ ion-title{
 
 code {
   white-space: pre-wrap;
+}
+
+
+
+.image{
+  height: 120px;
 }
 
 .error{

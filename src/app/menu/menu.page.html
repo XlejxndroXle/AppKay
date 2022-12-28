@@ -39,7 +39,7 @@
 
       <ion-header >
         <ion-toolbar>
-          <ion-item lines="none">
+          <ion-item lines="none" color="none">
             <ion-title>KAYROT</ion-title>
             <ion-button color="mycolor" (click)="botonCerrarSesion()" >
               <ion-icon slot="icon-only" name="power"></ion-icon>
@@ -62,7 +62,6 @@
                </ion-item>
               </ion-col>
       <!-- SEGUNDO BOTON -->
-
               <ion-col color="none">
                 <ion-item color="none" lines="none">
                       <img  (click)="presentActionSheet()" src="../../assets/iconos/historialpedidos.png"/>
@@ -84,7 +83,6 @@
                     <img  [routerLink]="['/vales']"  src="../../assets/iconos/vales.png"  routerLinkActive="router-link-active" />
               </ion-item>
             </ion-col>
-          <!-- QUINTO BOTON     -->
         </ion-row>
     </div>
       <div class="ops">
@@ -105,11 +103,64 @@
     </div>
   </div>
 
- 
 <!-- MENU DE COMERCIAL Y VENDEDOR -->
-
   <div *ngIf="this.tipoUsuario==='2' || this.tipoUsuario==='3'">
-         <!-- PRIMER BOTON -->
+
+    <!-- <ion-card [routerLink]="['/levantar-pedido/'+1+'/'+0]" routerLinkActive="router-link-active">
+      <ion-card-header>
+        <ion-item color="none" lines="none">
+          <img class="image" src="../../assets/iconos/levantarpedido.png" />
+          <ion-card-title>Levantar pedido</ion-card-title>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card (click)="presentActionSheet()">
+      <ion-card-header>
+        <ion-item color="none" lines="none">
+          <img class="image" alt="Silhouette of mountains" src="../../assets/iconos/historialpedidos.png" />
+          <ion-card-title>Historial de pedido</ion-card-title>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card [routerLink]="['/promociones']"  routerLinkActive="router-link-active" >
+      <ion-card-header>
+        <ion-item color="none" lines="none">
+          <img class="image" alt="Silhouette of mountains" src="../../assets/iconos/promociones.png" />
+          <ion-card-title>Promociones</ion-card-title>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card  [routerLink]="['/vales']"  routerLinkActive="router-link-active" >
+      <ion-card-header>
+        <ion-item color="none" lines="none">
+          <img class="image" alt="Silhouette of mountains" src="../../assets/iconos/vales.png" />
+          <ion-card-title>Vales</ion-card-title>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card  [routerLink]="['/paquetes']"   routerLinkActive="router-link-active" >
+      <ion-card-header>
+        <ion-item color="none" lines="none">
+          <img class="image" alt="Silhouette of mountains" src="../../assets/iconos/paquetes.png"/>
+          <ion-card-title>Vales</ion-card-title>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-card  [routerLink]="['/his']"  routerLinkActive="router-link-active"  >
+      <ion-card-header>
+        <ion-item color="none" lines="none">
+          <img class="image" alt="Silhouette of mountains" src="../../assets/iconos/notificación.png" />
+          <ion-card-title>Notificaciones</ion-card-title>
+        </ion-item>
+      </ion-card-header>
+    </ion-card> -->
+
+   
          <div class="ops">
           <ion-row  justify-content-center >
               <ion-col color="none" lines="none">
@@ -117,17 +168,15 @@
                       <img [routerLink]="['/levantar-pedido/'+1+'/'+0]" src="../../assets/iconos/levantarpedido.png"  routerLinkActive="router-link-active" />
                </ion-item>
               </ion-col>
-      <!-- SEGUNDO BOTON -->
-
+     
       <ion-col color="none">
         <ion-item color="none" lines="none">
-              <img  (click)="presentActionSheet()" src="../../assets/iconos/historialpedidos.png"/>
+          <img  (click)="presentActionSheet()" src="../../assets/iconos/historialpedidos.png"/>
         </ion-item>
       </ion-col>
-
-          </ion-row>
-      </div>
-       <!-- QUINTO BOTON -->
+      </ion-row>
+    </div>
+      
        <div class="ops">
         <ion-row  justify-content-center>
             <ion-col>
@@ -136,7 +185,7 @@
                </ion-item>
             </ion-col>
             
-        <!-- SEXTO BOTON -->
+    
             <ion-col >
               <ion-item color="none" lines="none">
                     <img  [routerLink]="['/vales']"  src="../../assets/iconos/vales.png"  routerLinkActive="router-link-active" />
@@ -144,7 +193,7 @@
             </ion-col>
         </ion-row>
       </div>
-             <!-- QUINTO BOTON -->
+           
              <div class="ops">
               <ion-row  justify-content-center>
                 <ion-col >
@@ -158,7 +207,7 @@
                      </ion-item>
                   </ion-col>
               </ion-row>
-            </div>
+            </div> 
       
       </div>
         <!-- USUARIO NO ENCONTRADO -->
@@ -167,9 +216,9 @@
         <div class="error">
           <img src="../assets/img/error.png" alt="">
         </div>
-        <h1>Lo sentimos, pero el usuario que ingresaste no existe en sistema, favor de comunicarse con el
+        <h1>Lo sentimos, el usuario que ingresaste no existe en sistema, favor de comunicarse con el
           administrador</h1>
       </div>
     </ion-content>
-  <!-- </div> -->
+ 
 </ion-app>

@@ -5,13 +5,17 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup,  FormBuilder, Validators } from '@angular/forms';
 import jwtDecode from 'jwt-decode';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-cobro-pedido-sub',
   templateUrl: './cobro-pedido-sub.page.html',
   styleUrls: ['./cobro-pedido-sub.page.scss'],
 })
 export class CobroPedidoSubPage {
-  formularioAsignacion: any;
+  
+  tipoPago: any;
+  formularioAsignacion: FormGroup;
   tipoUsuarioLogueado;
   registroUnaVez='SI';
   objetoDatosCobro;
@@ -23,7 +27,7 @@ export class CobroPedidoSubPage {
   tipoEstado: any;
   objetoDatosPedido;
   objListaCobro: any[]=[];
-  constructor(private activatedRoute: ActivatedRoute,private alertController: AlertController,private httpClient: HttpClient, private formBuilder: FormBuilder) {
+  constructor(private activatedRoute: ActivatedRoute,private alertController: AlertController,private httpClient: HttpClient, private formBuilder: FormBuilder,private router: Router) {
     this.crearFormulario();
     this.traerFormasCobro();
     this.tipoUsuarioLogueado = jwtDecode(localStorage.getItem('jwt-admin'))['data']['tipoUsuario'];
@@ -36,6 +40,8 @@ export class CobroPedidoSubPage {
     await this.mostrarDatosCobro(this.idPedido);
     await this.mostrarListadoCobro(this.idPedido);
     await this.mostrarPedido(this.idPedido);
+
+    
   }
 
 
@@ -47,8 +53,6 @@ export class CobroPedidoSubPage {
       formaCobro: ['', Validators.compose([])],
       nuevoCobro: ['', Validators.compose([])]
     });
-    this.formularioAsignacion.controls['nuevoCobro'].setValue('');
-    this.formularioAsignacion.controls['formaCobro'].setValue('');
   }
 
   traerFormasCobro()
@@ -71,6 +75,7 @@ export class CobroPedidoSubPage {
         );
       }
     );
+
   }
 
   aceptarCobro(){
@@ -89,12 +94,15 @@ export class CobroPedidoSubPage {
       this.httpClient.post(environment.api_url + 'CrudCobrosVentasSubdistribuidores/registraPago', formData).subscribe((response) => {
           this.crearNotificacion(response['message']);
           console.log("abono correcto")
+          this.formularioAsignacion.controls['nuevoCobro'].setValue('');
+          this.formularioAsignacion.controls['formaCobro'].setValue('');
         }, (error) => {
           this.crearNotificacionError(error['error']['message'] || 'Error desconocido');
           console.log("abono incorrecto")
           this.registroUnaVez='SI';
         });
       }
+     
     }
   
   async mostrarListadoCobro(idPedido){
@@ -121,22 +129,20 @@ export class CobroPedidoSubPage {
   }
 
 
-  async mostrarDatosCobro(idPedido) {
+  async mostrarDatosCobro(idPedido)
+  {
     const formData = new FormData();
     formData.append('idPedido', idPedido);
-    await this.httpClient
-      .post(environment.api_url + 'CrudCobrosVentasSubdistribuidores/consultaDatosCobro', formData)
-      .toPromise()
-      .then((data) => {
-        //console.log(data)
-        this.objetoDatosCobro = {
-        fechaLimitePago: data['fechaLimitePago'],
-        tipoPago: data['tipoPago'],
-        total: data['total'],
-        total_restante: data['total_restante'],
-        };
-      
-      });
+    await this.httpClient.post(environment.api_url + 'CrudCobrosVentasSubdistribuidores/consultaDatosCobro', formData).toPromise().then((data: any[]) => {
+      // for (let i = 0; i < data.length; i++) {
+        this.objetoDatosCobro = data;
+        // };
+        let totalPedido=parseFloat(this.objetoDatosCobro.total);
+        let restante=parseFloat(this.objetoDatosCobro.total_restante);
+        this.formularioAsignacion.controls['totalPedido'].setValue(totalPedido.toFixed(2));
+        this.formularioAsignacion.controls['restaPorPagar'].setValue(restante.toFixed(2));
+        this.formularioAsignacion.controls['fechaLimite'].setValue(this.objetoDatosCobro.fechaLimitePago);
+    });
   }
 
 
@@ -171,40 +177,12 @@ export class CobroPedidoSubPage {
         };
 
         this.tipoEstado=data['status'];
+        this.tipoPago=data['tipoPago'];
         //console.log(data[i].nombreProveedor);
       });
 
 
   }
-
-  
-  async alertaCobro() {
-    const alert = await this.alertController.create({
-      header: '¿Desea registrar el cobro?',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          handler: () => {
-            this.handlerMessage = 'Alert canceled';
-          },
-        },
-        {
-          text: 'Aceptar',
-          role: 'confirm',
-          handler: () => {
-            this.handlerMessage = 'Alert confirmed';
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-
-    const { role } = await alert.onDidDismiss();
-    this.roleMessage = `Dismissed with role: ${role}`;
-  }
-
 
   async crearNotificacion(mensaje) {
     const alert = await this.alertController.create({
@@ -214,7 +192,16 @@ export class CobroPedidoSubPage {
         {
           text: 'Aceptar',
           cssClass: 'alert-button-confirm',
-        },
+          handler: () => {
+            if(this.tipoEstado==2){
+            this.router.navigate(['/psubdistribuidor/surtidos']);
+            }
+            if(this.tipoEstado==5){
+              this.router.navigate(['/psubdistribuidor/vencidos']);
+              }
+           },
+        },    
+           
       ],
     });
 

@@ -25,6 +25,9 @@ export class PermisosService {
     ];
   }
   async obtenerIdCliente(idUsuario) {
+    if(this.tipoDeUsuario==3 || this.tipoDeUsuario==2){
+      return;
+    }else{
     const formData = new FormData();
     formData.append('idUsuario', idUsuario);
     await this.httpClient
@@ -35,6 +38,7 @@ export class PermisosService {
       .toPromise()
       .then(
         (data: any[]) => {
+          console.log(data)
           localStorage.setItem('idCliente', data['idCliente']);
           this.idCliente = data['idCliente'];
           // this.router.navigate(['/menu']);
@@ -43,7 +47,7 @@ export class PermisosService {
           // eslint-disable-next-line @typescript-eslint/quotes
           //this.presentToast("Datos incorrectos");
         }
-      );
+      );}
   }
 
   async getTipoUsuario() {

@@ -8,6 +8,9 @@ import { PedidosService } from '../../services/pedidos.service';
   styleUrls: ['./liquidados.page.scss'],
 })
 export class LiquidadosPage implements OnInit {
+  itemsPedido:any[]=[]; 
+  busquedaIdPedido: any;
+  pedidos:any;
   pedidosSubLiquidados:any []=[];  
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
@@ -25,5 +28,8 @@ export class LiquidadosPage implements OnInit {
     //await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,4,2); //cambiar numero depende de vencido o liquiedo
     
   }
+
+
+
 
 }

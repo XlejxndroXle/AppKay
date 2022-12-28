@@ -7,6 +7,17 @@ import { PedidosService } from '../../services/pedidos.service';
   styleUrls: ['./vencidos.page.scss'],
 })
 export class VencidosPage implements OnInit {
+  handleRefresh(event) {
+    setTimeout(async () => {
+      event.target.complete();
+      //location.reload();
+      const tipoUsuario=await this.permisos.getTipoUsuario();
+      const idUsuario=await this.permisos.getIdUsuario();
+      await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,5,2);
+      this.pedidosSubVencidos=this.pedidosService.pedidosCliente;
+    return false;
+    }, 1300);
+  };
   pedidosSubVencidos:any []=[];  
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 

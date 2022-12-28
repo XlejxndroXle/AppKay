@@ -8,6 +8,7 @@ import { environment } from '../../environments/environment';
 export class PedidosService {
   pedidosCliente: any[] = []; //Arreglo para almacenar los pedidos
   statusCliente;
+  idPedido: any;
   constructor(private httpClient: HttpClient) {}
 
 
@@ -38,6 +39,7 @@ export class PedidosService {
               status: data[i].status,
             };
             this.pedidosCliente.push(pedioObjeto);
+            this.idPedido= data['idPedido'];
           }
         },
         (error) => {
@@ -49,32 +51,5 @@ export class PedidosService {
 
 
 
-/*
-  async getStatus(estatus){
-    this.statusCliente = [];
-     const formData = new FormData();
-    formData.append('status', estatus);
-    await this.httpClient
-    .post(environment.api_url + 'CrudPedidos/listaPedidosMovil', formData)
-    .toPromise()
-    .then(
-      (data: any[]) => {
-        console.log(data);
-        //Lleno el arreglo de pedidos
-        let statusObjeto;
-        for (let i = 0; i < data.length; i++) {
-          statusObjeto = {
-            status: data[i].status,
-          };
-          this.statusCliente.push(statusObjeto);
-        }
-      },
-      (error) => {
-        // eslint-disable-next-line @typescript-eslint/quotes
-        //this.presentToast("Datos incorrectos");
-      }
-    );
-  }
-*/
 
 }
