@@ -25,6 +25,7 @@
     "@capacitor/core": "4.3.0",
     "@capacitor/haptics": "4.0.1",
     "@capacitor/keyboard": "4.0.1",
+    "@capacitor/push-notifications": "^4.1.2",
     "@capacitor/status-bar": "4.0.1",
     "@ionic-native/in-app-browser": "^5.36.0",
     "@ionic-selectable/angular": "^5.0.0-alpha.19",

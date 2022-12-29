@@ -10,6 +10,9 @@
   </ion-toolbar>  
 </ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-item color="none" lines="none" class="ion-no-border"> 
     <p>Presione <ion-icon name="ellipsis-horizontal-outline"></ion-icon> para ver los detalles del pedido. <br>
     Presione <ion-icon name="cash-outline"></ion-icon> para ver los pagos del pedido.</p>

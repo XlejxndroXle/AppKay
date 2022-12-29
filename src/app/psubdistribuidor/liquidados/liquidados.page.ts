@@ -8,6 +8,17 @@ import { PedidosService } from '../../services/pedidos.service';
   styleUrls: ['./liquidados.page.scss'],
 })
 export class LiquidadosPage implements OnInit {
+  handleRefresh(event) {
+    setTimeout(async () => {
+      event.target.complete();
+      //location.reload();
+      const tipoUsuario=await this.permisos.getTipoUsuario();
+      const idUsuario=await this.permisos.getIdUsuario();
+      await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,4,2);
+      this.pedidosSubLiquidados=this.pedidosService.pedidosCliente;
+    return false;
+    }, 3000);
+  };
   itemsPedido:any[]=[]; 
   busquedaIdPedido: any;
   pedidos:any;

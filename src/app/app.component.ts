@@ -12,6 +12,7 @@ export class AppComponent {
   result: string;
 
   constructor(private pushService:PushService) {
+    //this.pushService.initPush();
      //this.pushService.OneSignalInit();
   }
 
