@@ -11,15 +11,34 @@
 </ion-header>
  
 <ion-content>
+
   <ion-item color="none" lines="none" class="ion-no-border"> 
     <p>Presione <ion-icon name="eye-sharp"></ion-icon> para ver más detalles acerca de la promoción.</p>
   </ion-item>
   <ion-item color="none" lines="none" > 
     <h5><b>Detalles de la promoción</b></h5>
   </ion-item>
+
+  <!-- SKELETON -->
+  <div *ngIf="this.promos == null">
+    <ion-card *ngFor="let item of [1,1,1,1,1,1]">
+      <ion-item  lines="none">
+        <ion-skeleton-text [animated]="true" style="width: 45%"></ion-skeleton-text>
+        <ion-icon color="black" class="icono"  slot="end" name="eye-sharp"></ion-icon>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-skeleton-text [animated]="true" style="width: 45%"></ion-skeleton-text>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-skeleton-text [animated]="true" style="width: 60%"></ion-skeleton-text>
+      </ion-item>
+    
+  </ion-card>
+  </div>
+
   <ion-card *ngFor="let promociones of promos">
     <ion-item  lines="none">
-      <ion-icon button="" slot="end" class="icono" name="eye-sharp" [routerLink]="['/detalle-promocion/'+promociones.idpromocion]"  routerLinkActive="router-link-active"></ion-icon>
+      <ion-icon color="black" slot="end" class="icono" name="eye-sharp" [routerLink]="['/detalle-promocion/'+promociones.idpromocion]"  routerLinkActive="router-link-active"></ion-icon>
       <h6><b>Promoción #{{promociones.idpromocion}}</b></h6>
     </ion-item>
       <ion-item lines="none">

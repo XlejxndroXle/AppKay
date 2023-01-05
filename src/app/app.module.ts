@@ -9,13 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { BackgroundMode } from '@awesome-cordova-plugins/background-mode/ngx';
 
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, FormsModule, ReactiveFormsModule], 
-  providers: [InAppBrowser,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
+  providers: [InAppBrowser, BackgroundMode, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

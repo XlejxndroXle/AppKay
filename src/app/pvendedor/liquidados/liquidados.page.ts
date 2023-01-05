@@ -8,7 +8,8 @@ import { PedidosService } from '../../services/pedidos.service';
   styleUrls: ['./liquidados.page.scss'],
 })
 export class LiquidadosPage implements OnInit {
-  pedidosLiquidados:any []=[];  
+  pedidosLiquidados:any []=[];
+  //pedidosLiquidados;   
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
   async ngOnInit() {

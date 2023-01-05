@@ -15,6 +15,26 @@
     <p>Presione <ion-icon name="ellipsis-horizontal-outline"></ion-icon> para ver los detalles del pedido. <br>
     Presione <ion-icon name="cash-outline"></ion-icon> para ver los pagos del pedido.</p>
   </ion-item>
+  <!-- SKELETON -->
+<!-- <div *ngIf="this.pedidosLiquidados == null">
+  <ion-card *ngFor="let item of [1,1,1,1,1,1]">
+    <ion-item  lines="none">
+      <ion-skeleton-text [animated]="true" style="width: 45%"></ion-skeleton-text>
+      <ion-icon color="black" class="icono"  slot="end" name="ellipsis-horizontal-outline"></ion-icon>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-skeleton-text [animated]="true" style="width: 50%"></ion-skeleton-text>
+    </ion-item>
+    <ion-item >
+      <ion-skeleton-text [animated]="true" style="width: 45%"></ion-skeleton-text>
+      <ion-icon color="black" class="icono"  slot="end" name="cash-outline"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-skeleton-text [animated]="true" style="width: 25%"></ion-skeleton-text>
+    </ion-item>
+  
+</ion-card>
+</div> -->
 
   <ion-card *ngFor="let liquidados of pedidosLiquidados">
     <ion-item  lines="none">

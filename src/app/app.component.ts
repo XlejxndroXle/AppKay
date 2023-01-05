@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, enableProdMode } from '@angular/core';
 import { PushService } from './services/push.service';
 import { interval } from 'rxjs';
+import { BackgroundMode } from '@awesome-cordova-plugins/background-mode/ngx';
 
 
 
@@ -13,17 +14,24 @@ import { interval } from 'rxjs';
 export class AppComponent implements OnInit {
   result: string;
 
-  constructor(private pushService:PushService) {
+  constructor(private pushService:PushService, private backgroundMode:BackgroundMode) {
     //this.pushService.initPush();
      //this.pushService.OneSignalInit();
+     
   }
   
+
+
 async ngOnInit() {
   await this.getNotification();
+  this.backgroundMode.enable();
+ 
 }
+
+
 async getNotification(){
   
-  interval(1000).subscribe(x => {
+  interval(500000).subscribe(x => {
      this.pushService.traerNumNotificcione();
    
     //this.pushService.primeraVez=1;

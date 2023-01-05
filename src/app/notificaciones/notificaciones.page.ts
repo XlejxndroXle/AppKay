@@ -10,17 +10,17 @@ import { environment } from '../../environments/environment';
   templateUrl: './notificaciones.page.html',
   styleUrls: ['./notificaciones.page.scss'],
 })
-export class NotificacionesPage  {
-  //clickSub: any;
-  constructor(private notificacionService:PushService, private httpClient:HttpClient ) { 
-    // this.notificacionService.on('click').subscribe(notification => {
-    //    // Insert your logic here
-    //     });
-    
+export class NotificacionesPage implements OnInit{
+  noti;
+  constructor(private notificacionService:PushService, private httpClient:HttpClient ) {}
+
+
+  async ngOnInit(){
+   await this.notificacionService.historialNotificaciones();
+   this.noti =  this.notificacionService.detallehistorialNotifiaciones;
+  
   }
-
-
-
+  
 
 
 

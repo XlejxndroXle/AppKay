@@ -9,6 +9,7 @@ import { PedidosService } from '../../services/pedidos.service';
 })
 export class SurtidosPage implements OnInit {
   pedidosSurtido:any []=[];  
+  //pedidosSurtido;  
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
   async ngOnInit() {

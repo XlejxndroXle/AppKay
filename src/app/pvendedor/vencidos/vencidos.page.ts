@@ -11,6 +11,7 @@ import { PedidosService } from '../../services/pedidos.service';
 export class VencidosPage implements OnInit {
 
   pedidos:any []=[];  
+  //pedidos;
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
 

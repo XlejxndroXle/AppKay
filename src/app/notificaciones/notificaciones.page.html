@@ -9,17 +9,29 @@
   </ion-toolbar>  
 </ion-header> 
 <ion-content>
-
-  <!-- <ion-button (ionClick)="getNotification()">Notificacion</ion-button> -->
-
-
-<ion-card>
-  <ion-item>
-    <ion-label>
-      <p>Text</p>
-    </ion-label>
+  <div *ngIf="this.noti == null">
+    <ion-card *ngFor="let item of [1,1,1,1,1,1,1,1,1]">
+      <ion-item  lines="none">
+        <ion-skeleton-text [animated]="true" style="width: 45%"></ion-skeleton-text>
+      </ion-item>
+      <!-- <ion-item lines="none">
+        <ion-skeleton-text [animated]="true" style="width: 45%"></ion-skeleton-text>
+      </ion-item> -->
+      <ion-item lines="none">
+        <ion-skeleton-text [animated]="true" style="width: 60%"></ion-skeleton-text>
+      </ion-item>
+    
+  </ion-card>
+  </div>
+<ion-card *ngFor="let  notificacion of noti" >
+  <ion-item lines="none">
+    <p slot="end">{{notificacion.fecha  | date:'dd/MM/yyyy'}}</p>
+    <!-- <ion-icon button="" color="black" slot="end" class="icono" name="eye-sharp" [routerLink]="['/detalle-vale/'+vale.idvale]"  routerLinkActive="router-link-active"></ion-icon> -->
+    <p><b>{{notificacion.titulo}}</b></p>
   </ion-item>
+  <ion-item lines="none">
+    {{notificacion.mensaje}}
+    
+   </ion-item>
 </ion-card>
-
-
 </ion-content>

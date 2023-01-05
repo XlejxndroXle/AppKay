@@ -15,32 +15,26 @@ export class PushService {
   totalsolicitudes = 0;
   primeraVez=0;
   LocalNotifications: any;
-
+  notificaciones: any[] = [];
+  detallehistorialNotifiaciones: any []=[];
   constructor(private alertController: AlertController, private platform: Platform, private httpClient:HttpClient) { 
     // this.LocalNotifications.on('click').subscribe(notification => {
     //   // Insert your logic here
     //    });
   }
-
   showLocalNotification(notificaciones): void {
     LocalNotifications.schedule({
       notifications: notificaciones,
     });
   }
-
   async traerNumNotificcione(){
     await this.httpClient.get(environment.api_url + 'CrudNotificaciones/obtenerNumeroNotificaciones').toPromise().then((data: number) =>  {
       let mostrar=0;
       if(data != 0){
-        //console.log('mostrar'+mostrar+" data"+data+" totalsolicitudes"+this.totalsolicitudes)
       if(this.totalsolicitudes!=data && mostrar==0){
           mostrar=1;
-         
           this.totalsolicitudes=data;
-          this.traerNotificaciones();
-      //this.notificaciones.crearNotificacionAuxilio( 'Se tienen '+ data +' solicitud(es) de auxilio sin atender', "fa fa-times", "error");
-      
-      
+          this.traerNotificaciones();      
     }else{
           mostrar=0;
       }
@@ -52,9 +46,11 @@ export class PushService {
 
 
   async traerNotificaciones(){
-    await this.httpClient.get(environment.api_url + 'CrudNotificaciones/obtenerNotificaciones').toPromise().then((data: any[]) =>  {
-     // console.log(data.length)
-    let notificaciones:any []=[];
+    this.notificaciones = []//limpia el arreglo
+    await this.httpClient.get(environment.api_url + 'CrudNotificaciones/obtenerNotificaciones')
+    .toPromise()
+    .then((data: any[]) =>  {
+      //console.log(data)
     let notificacionObjeto;
     let i;
     if(this.primeraVez==0){
@@ -64,19 +60,49 @@ export class PushService {
     {
       i=data.length-1;
     }
-    for ( i ; i < data.length; i++) {
+    for (i ; i < data.length; i++) {
         notificacionObjeto = {
           id: i,
           title: data[i].titulo,
-          body: data[i].mensaje
+          body: data[i].mensaje,
           
         };
-        notificaciones.push(notificacionObjeto);
+        this.notificaciones.push(notificacionObjeto);
        
       }
-      this.showLocalNotification(notificaciones);
+      this.showLocalNotification(this.notificaciones);
     });
     this.primeraVez=1;
+  }
+
+
+
+  async historialNotificaciones() {
+    this.detallehistorialNotifiaciones = [];
+    await this.httpClient
+      .get(environment.api_url + 'CrudNotificaciones/obtenerNotificaciones')
+      .toPromise()
+      .then(
+        (data: any[]) => {
+          //console.log(data);
+          //Lleno el arreglo de pedidos
+          let notiObjeto;
+          for (let i = 0; i < data.length; i++) {
+            notiObjeto = {
+              id: data[i].id,
+              titulo: data[i].titulo,
+              fecha: data[i].fecha,
+              mensaje: data[i].mensaje,
+              tipo: data[i].tipo,
+            };
+            this.detallehistorialNotifiaciones.push(notiObjeto);
+          }
+        }
+        // error =>{
+        //   eslint-disable-next-line @typescript-eslint/quotes
+        //   this.presentToast("Datos incorrectos");
+        // }
+      );
   }
 
 
@@ -157,7 +183,7 @@ export class PushService {
 
     }
 */
-
+/*
   OneSignalInit() {
     OneSignal.setAppId('6daa61c3-a98f-4ec8-9642-87960645983d');
  
@@ -175,7 +201,7 @@ export class PushService {
     });
 
   }
-
+*/
 
  
 //  OneSignalInit(){

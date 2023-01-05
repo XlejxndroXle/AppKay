@@ -8,6 +8,7 @@ import { PedidosService } from '../../services/pedidos.service';
   styleUrls: ['./liquidados.page.scss'],
 })
 export class LiquidadosPage implements OnInit {
+   
   handleRefresh(event) {
     setTimeout(async () => {
       event.target.complete();
@@ -17,12 +18,11 @@ export class LiquidadosPage implements OnInit {
       await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,4,2);
       this.pedidosSubLiquidados=this.pedidosService.pedidosCliente;
     return false;
-    }, 3000);
+    }, 1300);
   };
-  itemsPedido:any[]=[]; 
-  busquedaIdPedido: any;
-  pedidos:any;
-  pedidosSubLiquidados:any []=[];  
+
+  pedidosSubLiquidados;  
+  //pedidosSubLiquidados:any []=[];  
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
   async ngOnInit() {
@@ -31,13 +31,14 @@ export class LiquidadosPage implements OnInit {
     if(tipoUsuario==3){
       await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,4,2);
       this.pedidosSubLiquidados=this.pedidosService.pedidosCliente;
+      
     }
     if(tipoUsuario==4){
       await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,4,2);
       this.pedidosSubLiquidados=this.pedidosService.pedidosCliente;
     }
     //await this.pedidosService.obtnerPedidosCliente(tipoUsuario, idUsuario,4,2); //cambiar numero depende de vencido o liquiedo
-    
+
   }
 
 

@@ -18,7 +18,8 @@ export class SurtidosPage implements OnInit {
     return false;
     }, 1300);
   };
-  pedidosSubSurtidos:any []=[];  
+  pedidosSubSurtidos; 
+  //pedidosSubSurtidos;  
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
   async ngOnInit() {

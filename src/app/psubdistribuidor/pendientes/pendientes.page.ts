@@ -8,7 +8,8 @@ import { PedidosService } from '../../services/pedidos.service';
   styleUrls: ['./pendientes.page.scss'],
 })
 export class PendientesPage implements OnInit {
-  pedidosPendientes:any []=[];  
+  pedidosPendientes;  
+  //pedidosPendientes;
   constructor(private pedidosService:PedidosService,private permisos:PermisosService) { }
 
   async ngOnInit() {

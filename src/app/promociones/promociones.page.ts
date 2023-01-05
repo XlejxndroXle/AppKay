@@ -7,7 +7,8 @@ import { InfopromoService } from '../services/infopromo.service';
   styleUrls: ['./promociones.page.scss'],
 })
 export class PromocionesPage implements OnInit {
-  promos:any []=[];
+  //promos:any []=[];
+  promos;
   constructor(private infoPromoService:InfopromoService) { }
 
  async ngOnInit() {
